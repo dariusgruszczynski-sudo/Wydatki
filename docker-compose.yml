@@ -10,8 +10,9 @@ services:
     ports:
       - "${BIND:-127.0.0.1:8090}:3000"
     environment:
-      # WYMAGANE: wspólny PIN do logowania.
-      APP_PIN: "${APP_PIN:?Ustaw APP_PIN w pliku .env}"
+      # PIN per osoba — zalogowany PIN identyfikuje osobę i podstawia konto.
+      PIN_DAREK: "${PIN_DAREK:-1991}"
+      PIN_POLA: "${PIN_POLA:-1992}"
       # Sekret do podpisu ciasteczka sesji (dowolny długi losowy ciąg).
       SESSION_SECRET: "${SESSION_SECRET:?Ustaw SESSION_SECRET w pliku .env}"
       # Ile dni trzymać zalogowanie.

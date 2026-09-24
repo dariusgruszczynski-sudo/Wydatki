@@ -16,8 +16,8 @@
     <form id="loginForm" class="login-card">
       <div class="login-logo">💸</div>
       <h1>Wydatki & Oszczędności</h1>
-      <p class="muted">Podaj wspólny PIN, żeby wejść</p>
-      <input id="pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="PIN" />
+      <p class="muted">Podaj swój PIN</p>
+      <input id="pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="••••" />
       <button type="submit" class="btn btn-primary btn-block">Wejdź</button>
       <p id="loginError" class="error hidden"></p>
     </form>
@@ -29,37 +29,29 @@
       <div class="topbar-inner">
         <div class="brand">💸 Wydatki</div>
         <div class="topbar-actions">
-          <span id="whoami" class="pill hidden"></span>
+          <span id="whoami" class="pill person-pill hidden"></span>
+          <button id="settingsBtn" class="icon-btn" title="Ustawienia">⚙️</button>
           <button id="logoutBtn" class="icon-btn hidden" title="Wyloguj">⏻</button>
         </div>
       </div>
     </header>
 
     <main class="content">
-      <!-- ===== ZAKŁADKA: PULPIT (DASHBOARD) ===== -->
+      <!-- ===== ZAKŁADKA: PULPIT ===== -->
       <section id="tab-pulpit" class="tab active">
-        <div class="card">
+        <div class="card hero-card">
           <div class="card-head">
             <h2>Ten miesiąc</h2>
             <span id="dashMonthLabel" class="pill"></span>
           </div>
           <div class="dash-hero">
-            <div id="dashTotal" class="dash-total">0,00 zł</div>
+            <div id="dashTotal" class="dash-total" data-amount="0">0,00 zł</div>
             <div id="dashDelta" class="dash-delta"></div>
           </div>
           <div class="stat-row">
-            <div class="stat">
-              <div class="stat-label">Poprz. miesiąc</div>
-              <div id="dashPrev" class="stat-value">0,00 zł</div>
-            </div>
-            <div class="stat">
-              <div class="stat-label">Średnia</div>
-              <div id="dashAvg" class="stat-value">0,00 zł</div>
-            </div>
-            <div class="stat">
-              <div class="stat-label">Stałe / mies.</div>
-              <div id="dashRecurring" class="stat-value">0,00 zł</div>
-            </div>
+            <div class="stat"><div class="stat-label">Poprz. miesiąc</div><div id="dashPrev" class="stat-value">—</div></div>
+            <div class="stat"><div class="stat-label">Średnia</div><div id="dashAvg" class="stat-value">—</div></div>
+            <div class="stat"><div class="stat-label">Stałe / mies.</div><div id="dashRecurring" class="stat-value">—</div></div>
           </div>
         </div>
 
@@ -69,24 +61,15 @@
         </div>
 
         <div class="card">
-          <div class="card-head">
-            <h2>Kategorie vs poprzedni</h2>
-            <span class="pill">± zmiana</span>
-          </div>
+          <div class="card-head"><h2>Kategorie vs poprzedni</h2><span class="pill">± zmiana</span></div>
           <div id="dashCategories" class="compare"></div>
         </div>
 
         <div class="card">
           <h2>Podział w tym miesiącu</h2>
           <div class="stat-row">
-            <div class="stat">
-              <div class="stat-label">🤝 Wspólne</div>
-              <div id="dashShared" class="stat-value">0,00 zł</div>
-            </div>
-            <div class="stat">
-              <div class="stat-label">👤 Własne</div>
-              <div id="dashOwn" class="stat-value">0,00 zł</div>
-            </div>
+            <div class="stat"><div class="stat-label">🤝 Wspólne</div><div id="dashShared" class="stat-value">—</div></div>
+            <div class="stat"><div class="stat-label">👤 Własne</div><div id="dashOwn" class="stat-value">—</div></div>
           </div>
           <div id="dashByPerson" class="bars"></div>
         </div>
@@ -94,85 +77,43 @@
 
       <!-- ===== ZAKŁADKA: WYDATKI ===== -->
       <section id="tab-wydatki" class="tab">
-        <div class="card add-card">
-          <h2>Dodaj wydatek</h2>
-          <form id="expenseForm" class="form-grid">
-            <label class="field">
-              <span>Kwota (zł)</span>
-              <input id="expAmount" type="text" inputmode="decimal" placeholder="np. 49,90" required />
-            </label>
-            <label class="field">
-              <span>Data</span>
-              <input id="expDate" type="date" required />
-            </label>
-            <label class="field field-full">
-              <span>Kategoria</span>
-              <select id="expCategory" required></select>
-            </label>
-
-            <div class="field field-full">
-              <span>Kto płacił</span>
-              <div id="expPerson" class="segmented" role="group"></div>
+        <div class="card qe-card">
+          <h2>Szybki wydatek</h2>
+          <div class="qe-amount-wrap">
+            <input id="qeAmount" class="qe-amount" type="text" inputmode="decimal" placeholder="0" />
+            <span class="qe-cur">zł</span>
+          </div>
+          <div class="qe-row">
+            <div class="qe-block">
+              <span class="qe-lbl">Kto</span>
+              <div id="qePerson" class="segmented small" role="group"></div>
             </div>
-
-            <div class="field field-full">
-              <span>Z jakiego konta</span>
-              <div class="segmented" role="group">
-                <button type="button" class="seg" data-fund="wspolne">🤝 Wspólne</button>
-                <button type="button" class="seg" data-fund="wlasne">👤 Własne</button>
+            <div class="qe-block">
+              <span class="qe-lbl">Konto</span>
+              <div class="segmented small" role="group">
+                <button type="button" class="seg qe-fund" data-fund="wspolne">🤝</button>
+                <button type="button" class="seg qe-fund" data-fund="wlasne">👤</button>
               </div>
             </div>
-
-            <label class="field field-full">
-              <span>Notatka (opcjonalnie)</span>
-              <input id="expNote" type="text" placeholder="np. Biedronka, tygodniowe zakupy" />
-            </label>
-
-            <button type="submit" class="btn btn-primary btn-block">Dodaj wydatek</button>
-            <p id="expError" class="error hidden"></p>
-          </form>
-          <details class="add-cat">
-            <summary>Zarządzaj kategoriami</summary>
-            <form id="catForm" class="inline-form">
-              <input id="newCat" type="text" placeholder="Nowa kategoria" />
-              <button type="submit" class="btn btn-ghost">Dodaj</button>
-            </form>
-            <div id="catList" class="chips"></div>
-          </details>
+          </div>
+          <p class="qe-hint muted small">Wpisz kwotę i kliknij kategorię — gotowe.</p>
+          <div id="catGrid" class="cat-grid"></div>
+          <p id="qeError" class="error hidden"></p>
         </div>
 
         <div class="card">
-          <div class="card-head">
-            <h2>Płatności cykliczne</h2>
-            <span id="recTotal" class="pill"></span>
-          </div>
+          <div class="card-head"><h2>Płatności cykliczne</h2><span id="recTotal" class="pill"></span></div>
           <p class="muted small">Stałe co miesiąc (abonamenty, rachunki, raty). Dodają się automatycznie w dniu płatności.</p>
           <div id="recList" class="list"></div>
           <details class="add-cat">
             <summary>+ Dodaj płatność cykliczną</summary>
             <form id="recForm" class="form-grid" style="margin-top:10px">
-              <label class="field field-full">
-                <span>Nazwa</span>
-                <input id="recName" type="text" placeholder="np. Netflix, prąd, rata auto" required />
-              </label>
-              <label class="field">
-                <span>Kwota (zł)</span>
-                <input id="recAmount" type="text" inputmode="decimal" placeholder="np. 43" required />
-              </label>
-              <label class="field">
-                <span>Dzień miesiąca</span>
-                <input id="recDay" type="number" min="1" max="28" value="1" required />
-              </label>
-              <label class="field field-full">
-                <span>Kategoria</span>
-                <select id="recCategory" required></select>
-              </label>
-              <div class="field field-full">
-                <span>Kto płaci</span>
-                <div id="recPerson" class="segmented" role="group"></div>
-              </div>
-              <div class="field field-full">
-                <span>Z jakiego konta</span>
+              <label class="field field-full"><span>Nazwa</span><input id="recName" type="text" placeholder="np. Netflix, prąd, rata auto" required /></label>
+              <label class="field"><span>Kwota (zł)</span><input id="recAmount" type="text" inputmode="decimal" placeholder="np. 43" required /></label>
+              <label class="field"><span>Dzień miesiąca</span><input id="recDay" type="number" min="1" max="28" value="1" required /></label>
+              <label class="field field-full"><span>Kategoria</span><select id="recCategory" required></select></label>
+              <div class="field field-full"><span>Kto płaci</span><div id="recPerson" class="segmented" role="group"></div></div>
+              <div class="field field-full"><span>Z jakiego konta</span>
                 <div class="segmented" role="group">
                   <button type="button" class="seg rec-fund active" data-recfund="wspolne">🤝 Wspólne</button>
                   <button type="button" class="seg rec-fund" data-recfund="wlasne">👤 Własne</button>
@@ -185,23 +126,11 @@
         </div>
 
         <div class="card">
-          <div class="card-head">
-            <h2>Podsumowanie</h2>
-            <select id="monthPicker" class="month-picker"></select>
-          </div>
+          <div class="card-head"><h2>Podsumowanie</h2><select id="monthPicker" class="month-picker"></select></div>
           <div class="stat-row">
-            <div class="stat">
-              <div class="stat-label">Razem</div>
-              <div id="sumTotal" class="stat-value">0,00 zł</div>
-            </div>
-            <div class="stat">
-              <div class="stat-label">🤝 Wspólne</div>
-              <div id="sumShared" class="stat-value">0,00 zł</div>
-            </div>
-            <div class="stat">
-              <div class="stat-label">👤 Własne</div>
-              <div id="sumOwn" class="stat-value">0,00 zł</div>
-            </div>
+            <div class="stat"><div class="stat-label">Razem</div><div id="sumTotal" class="stat-value">—</div></div>
+            <div class="stat"><div class="stat-label">🤝 Wspólne</div><div id="sumShared" class="stat-value">—</div></div>
+            <div class="stat"><div class="stat-label">👤 Własne</div><div id="sumOwn" class="stat-value">—</div></div>
           </div>
           <div id="byPerson" class="bars"></div>
           <h3 class="subhead">Wg kategorii</h3>
@@ -209,38 +138,23 @@
         </div>
 
         <div class="card">
-          <div class="card-head">
-            <h2>Historia</h2>
-            <span id="expCount" class="pill"></span>
-          </div>
+          <div class="card-head"><h2>Historia</h2><span id="expCount" class="pill"></span></div>
           <div id="expenseList" class="list"></div>
         </div>
       </section>
 
       <!-- ===== ZAKŁADKA: OSZCZĘDNOŚCI ===== -->
       <section id="tab-oszczednosci" class="tab">
-        <div id="tracks" class="tracks"></div>
+        <div id="jars" class="jars"></div>
 
         <div class="card add-card">
           <h2>Dodaj wpis oszczędności</h2>
           <p class="muted small">Plus = odłożenie / spłata. Minus = wypłata lub dług (np. <b>-500</b>).</p>
           <form id="savingForm" class="form-grid">
-            <div class="field field-full">
-              <span>Tor</span>
-              <div id="savPerson" class="segmented" role="group"></div>
-            </div>
-            <label class="field">
-              <span>Kwota (zł)</span>
-              <input id="savAmount" type="text" inputmode="decimal" placeholder="np. 500 lub -500" required />
-            </label>
-            <label class="field">
-              <span>Data</span>
-              <input id="savDate" type="date" required />
-            </label>
-            <label class="field field-full">
-              <span>Opis (opcjonalnie)</span>
-              <input id="savLabel" type="text" placeholder="np. spłata karty / odłożone z wypłaty" />
-            </label>
+            <div class="field field-full"><span>Tor</span><div id="savPerson" class="segmented" role="group"></div></div>
+            <label class="field"><span>Kwota (zł)</span><input id="savAmount" type="text" inputmode="decimal" placeholder="np. 500 lub -500" required /></label>
+            <label class="field"><span>Data</span><input id="savDate" type="date" required /></label>
+            <label class="field field-full"><span>Opis (opcjonalnie)</span><input id="savLabel" type="text" placeholder="np. spłata karty / odłożone z wypłaty" /></label>
             <div class="quick-row field-full">
               <button type="button" class="btn btn-ghost quick" data-sign="+">+ Odłożenie / spłata</button>
               <button type="button" class="btn btn-ghost quick" data-sign="-">− Wypłata / dług</button>
@@ -251,28 +165,45 @@
         </div>
 
         <div class="card">
-          <div class="card-head">
-            <h2>Historia oszczędności</h2>
-            <div class="segmented small" id="savFilter" role="group"></div>
-          </div>
+          <div class="card-head"><h2>Historia oszczędności</h2><div class="segmented small" id="savFilter" role="group"></div></div>
           <div id="savingList" class="list"></div>
         </div>
       </section>
     </main>
 
-    <!-- Dolna nawigacja (mobile) -->
+    <!-- Panel kontrolny (ustawienia / kategorie) -->
+    <div id="settings" class="modal hidden">
+      <div class="modal-card">
+        <div class="modal-head">
+          <h2>Panel kontrolny</h2>
+          <button id="settingsClose" class="icon-btn">✕</button>
+        </div>
+        <div class="modal-body">
+          <h3 class="subhead">Kategorie zakupów</h3>
+          <form id="catForm" class="cat-add">
+            <div id="emojiPick" class="emoji-pick"></div>
+            <div class="cat-add-row">
+              <span id="emojiCurrent" class="emoji-current">🏷️</span>
+              <input id="newCat" type="text" placeholder="Nazwa kategorii" />
+              <button type="submit" class="btn btn-primary">Dodaj</button>
+            </div>
+            <p id="catError" class="error hidden"></p>
+          </form>
+          <div id="catManage" class="cat-manage"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dolna nawigacja -->
     <nav class="tabbar">
-      <button class="tabbtn active" data-tab="pulpit">
-        <span class="tabicon">📊</span><span>Pulpit</span>
-      </button>
-      <button class="tabbtn" data-tab="wydatki">
-        <span class="tabicon">🧾</span><span>Wydatki</span>
-      </button>
-      <button class="tabbtn" data-tab="oszczednosci">
-        <span class="tabicon">🏦</span><span>Oszczędności</span>
-      </button>
+      <button class="tabbtn active" data-tab="pulpit"><span class="tabicon">📊</span><span>Pulpit</span></button>
+      <button class="tabbtn" data-tab="wydatki"><span class="tabicon">🧾</span><span>Wydatki</span></button>
+      <button class="tabbtn" data-tab="oszczednosci"><span class="tabicon">🐷</span><span>Skarbonki</span></button>
     </nav>
   </div>
+
+  <div id="toast" class="toast-wrap"></div>
+  <div id="confetti" class="confetti-wrap"></div>
 
   <script src="/app.js"></script>
 </body>

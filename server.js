@@ -11,17 +11,18 @@ const PORT = process.env.PORT || 3000;
 app.disable('x-powered-by');
 app.use(express.json({ limit: '256kb' }));
 
-// --- Autoryzacja (wspólny PIN) --------------------------------------------
+// --- Autoryzacja (PIN per osoba) ------------------------------------------
 
 app.get('/api/auth/status', (req, res) => {
-  res.json({ enabled: auth.enabled, authed: auth.isAuthed(req) });
+  res.json({ enabled: auth.enabled, authed: auth.isAuthed(req), person: auth.currentPerson(req) });
 });
 
 app.post('/api/auth/login', (req, res) => {
   const pin = (req.body && req.body.pin) || '';
-  if (auth.checkPin(pin)) {
-    auth.setAuthCookie(res);
-    return res.json({ ok: true });
+  const person = auth.personForPin(pin);
+  if (person) {
+    auth.setAuthCookie(res, person);
+    return res.json({ ok: true, person });
   }
   return res.status(401).json({ ok: false, error: 'Nieprawidłowy PIN' });
 });
@@ -121,18 +122,19 @@ app.get('/api/categories', requireAuth, (req, res) => {
 
 app.post('/api/categories', requireAuth, (req, res) => {
   const name = (req.body && String(req.body.name || '').trim()) || '';
+  const icon = (req.body && String(req.body.icon || '').trim()) || '🏷️';
   if (!name) return res.status(400).json({ error: 'Podaj nazwę kategorii' });
-  if (store.db.categories.some((c) => c.toLowerCase() === name.toLowerCase())) {
+  if (store.db.categories.some((c) => c.name.toLowerCase() === name.toLowerCase())) {
     return res.status(409).json({ error: 'Taka kategoria już istnieje' });
   }
-  store.db.categories.push(name);
+  store.db.categories.push({ name, icon: icon.slice(0, 8) });
   store.persist();
   res.status(201).json(store.db.categories);
 });
 
 app.delete('/api/categories/:name', requireAuth, (req, res) => {
   const name = req.params.name;
-  const idx = store.db.categories.findIndex((c) => c === name);
+  const idx = store.db.categories.findIndex((c) => c.name === name);
   if (idx < 0) return res.status(404).json({ error: 'Nie znaleziono kategorii' });
   store.db.categories.splice(idx, 1);
   store.persist();
@@ -451,13 +453,19 @@ function reportFor(person) {
     balance = store.round2(balance + a);
   }
 
+  const goal = Number(store.db.savingsGoals[person]) || 0;
+  const savedNow = store.round2(Math.max(0, saved));
+  // Wypełnienie skarbonki: saldo względem celu (0-100%). Bez celu — 0.
+  const fillPct = goal > 0 ? Math.max(0, Math.min(100, store.round2((balance / goal) * 100))) : 0;
   return {
     person,
     balance,
     deposits,
     withdrawals,
     debtPaid, // "ile się spłaciło"
-    saved: store.round2(Math.max(0, saved)), // "ile się odłożyło"
+    saved: savedNow, // "ile się odłożyło"
+    goal,
+    fillPct,
     inDebt: balance < 0,
     count: rows.length,
   };
@@ -469,8 +477,20 @@ app.get('/api/savings/report', requireAuth, (req, res) => {
     balance: store.round2(tracks.reduce((s, t) => s + t.balance, 0)),
     debtPaid: store.round2(tracks.reduce((s, t) => s + t.debtPaid, 0)),
     saved: store.round2(tracks.reduce((s, t) => s + t.saved, 0)),
+    goal: store.round2(tracks.reduce((s, t) => s + t.goal, 0)),
   };
   res.json({ tracks, totals });
+});
+
+// Ustaw cel skarbonki dla osoby.
+app.post('/api/savings/goal', requireAuth, (req, res) => {
+  const b = req.body || {};
+  const person = String(b.person || '').trim();
+  const goal = Math.max(0, toAmount(b.goal) || 0);
+  if (!isValidPerson(person)) return res.status(400).json({ error: 'Wybierz osobę' });
+  store.db.savingsGoals[person] = goal;
+  store.persist();
+  res.json({ ok: true, person, goal });
 });
 
 // --- Frontend --------------------------------------------------------------
