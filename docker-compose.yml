@@ -4,11 +4,11 @@ services:
     image: wydatki:latest
     container_name: wydatki
     restart: unless-stopped
-    # Na hoście słucha na 127.0.0.1:8090 — wystaw publicznie przez swój
-    # reverse proxy (nginx/traefik), tak jak reszta aplikacji na serwerze.
-    # Jeśli chcesz od razu wejść po IP:porcie, zmień na "8090:3000".
+    # Adres nasłuchu ustawiasz zmienną BIND w pliku .env:
+    #   BIND=0.0.0.0:8090       -> dostęp po IP:porcie (http://46.225.229.113:8090)
+    #   BIND=127.0.0.1:8090     -> tylko lokalnie, pod reverse proxy (nginx/traefik)
     ports:
-      - "127.0.0.1:8090:3000"
+      - "${BIND:-127.0.0.1:8090}:3000"
     environment:
       # WYMAGANE: wspólny PIN do logowania.
       APP_PIN: "${APP_PIN:?Ustaw APP_PIN w pliku .env}"
