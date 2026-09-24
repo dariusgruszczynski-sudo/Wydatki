@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0f172a" />
+  <title>Wydatki & Oszczędności</title>
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/icon.svg" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <!-- Ekran logowania -->
+  <div id="login" class="login hidden">
+    <form id="loginForm" class="login-card">
+      <div class="login-logo">💸</div>
+      <h1>Wydatki & Oszczędności</h1>
+      <p class="muted">Podaj wspólny PIN, żeby wejść</p>
+      <input id="pin" type="password" inputmode="numeric" autocomplete="current-password" placeholder="PIN" />
+      <button type="submit" class="btn btn-primary btn-block">Wejdź</button>
+      <p id="loginError" class="error hidden"></p>
+    </form>
+  </div>
+
+  <!-- Aplikacja -->
+  <div id="app" class="app hidden">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">💸 Wydatki</div>
+        <div class="topbar-actions">
+          <span id="whoami" class="pill hidden"></span>
+          <button id="logoutBtn" class="icon-btn hidden" title="Wyloguj">⏻</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      <!-- ===== ZAKŁADKA: WYDATKI ===== -->
+      <section id="tab-wydatki" class="tab active">
+        <div class="card add-card">
+          <h2>Dodaj wydatek</h2>
+          <form id="expenseForm" class="form-grid">
+            <label class="field">
+              <span>Kwota (zł)</span>
+              <input id="expAmount" type="text" inputmode="decimal" placeholder="np. 49,90" required />
+            </label>
+            <label class="field">
+              <span>Data</span>
+              <input id="expDate" type="date" required />
+            </label>
+            <label class="field field-full">
+              <span>Kategoria</span>
+              <select id="expCategory" required></select>
+            </label>
+
+            <div class="field field-full">
+              <span>Kto płacił</span>
+              <div id="expPerson" class="segmented" role="group"></div>
+            </div>
+
+            <div class="field field-full">
+              <span>Z jakiego konta</span>
+              <div class="segmented" role="group">
+                <button type="button" class="seg" data-fund="wspolne">🤝 Wspólne</button>
+                <button type="button" class="seg" data-fund="wlasne">👤 Własne</button>
+              </div>
+            </div>
+
+            <label class="field field-full">
+              <span>Notatka (opcjonalnie)</span>
+              <input id="expNote" type="text" placeholder="np. Biedronka, tygodniowe zakupy" />
+            </label>
+
+            <button type="submit" class="btn btn-primary btn-block">Dodaj wydatek</button>
+            <p id="expError" class="error hidden"></p>
+          </form>
+          <details class="add-cat">
+            <summary>Zarządzaj kategoriami</summary>
+            <form id="catForm" class="inline-form">
+              <input id="newCat" type="text" placeholder="Nowa kategoria" />
+              <button type="submit" class="btn btn-ghost">Dodaj</button>
+            </form>
+            <div id="catList" class="chips"></div>
+          </details>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>Podsumowanie</h2>
+            <select id="monthPicker" class="month-picker"></select>
+          </div>
+          <div class="stat-row">
+            <div class="stat">
+              <div class="stat-label">Razem</div>
+              <div id="sumTotal" class="stat-value">0,00 zł</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">🤝 Wspólne</div>
+              <div id="sumShared" class="stat-value">0,00 zł</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">👤 Własne</div>
+              <div id="sumOwn" class="stat-value">0,00 zł</div>
+            </div>
+          </div>
+          <div id="byPerson" class="bars"></div>
+          <h3 class="subhead">Wg kategorii</h3>
+          <div id="byCategory" class="bars"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>Historia</h2>
+            <span id="expCount" class="pill"></span>
+          </div>
+          <div id="expenseList" class="list"></div>
+        </div>
+      </section>
+
+      <!-- ===== ZAKŁADKA: OSZCZĘDNOŚCI ===== -->
+      <section id="tab-oszczednosci" class="tab">
+        <div id="tracks" class="tracks"></div>
+
+        <div class="card add-card">
+          <h2>Dodaj wpis oszczędności</h2>
+          <p class="muted small">Plus = odłożenie / spłata. Minus = wypłata lub dług (np. <b>-500</b>).</p>
+          <form id="savingForm" class="form-grid">
+            <div class="field field-full">
+              <span>Tor</span>
+              <div id="savPerson" class="segmented" role="group"></div>
+            </div>
+            <label class="field">
+              <span>Kwota (zł)</span>
+              <input id="savAmount" type="text" inputmode="decimal" placeholder="np. 500 lub -500" required />
+            </label>
+            <label class="field">
+              <span>Data</span>
+              <input id="savDate" type="date" required />
+            </label>
+            <label class="field field-full">
+              <span>Opis (opcjonalnie)</span>
+              <input id="savLabel" type="text" placeholder="np. spłata karty / odłożone z wypłaty" />
+            </label>
+            <div class="quick-row field-full">
+              <button type="button" class="btn btn-ghost quick" data-sign="+">+ Odłożenie / spłata</button>
+              <button type="button" class="btn btn-ghost quick" data-sign="-">− Wypłata / dług</button>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Zapisz</button>
+            <p id="savError" class="error hidden"></p>
+          </form>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <h2>Historia oszczędności</h2>
+            <div class="segmented small" id="savFilter" role="group"></div>
+          </div>
+          <div id="savingList" class="list"></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Dolna nawigacja (mobile) -->
+    <nav class="tabbar">
+      <button class="tabbtn active" data-tab="wydatki">
+        <span class="tabicon">🧾</span><span>Wydatki</span>
+      </button>
+      <button class="tabbtn" data-tab="oszczednosci">
+        <span class="tabicon">🏦</span><span>Oszczędności</span>
+      </button>
+    </nav>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

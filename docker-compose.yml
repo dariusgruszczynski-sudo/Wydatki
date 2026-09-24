@@ -1,0 +1,26 @@
+services:
+  wydatki:
+    build: .
+    image: wydatki:latest
+    container_name: wydatki
+    restart: unless-stopped
+    # Na hoście słucha na 127.0.0.1:8090 — wystaw publicznie przez swój
+    # reverse proxy (nginx/traefik), tak jak reszta aplikacji na serwerze.
+    # Jeśli chcesz od razu wejść po IP:porcie, zmień na "8090:3000".
+    ports:
+      - "127.0.0.1:8090:3000"
+    environment:
+      # WYMAGANE: wspólny PIN do logowania.
+      APP_PIN: "${APP_PIN:?Ustaw APP_PIN w pliku .env}"
+      # Sekret do podpisu ciasteczka sesji (dowolny długi losowy ciąg).
+      SESSION_SECRET: "${SESSION_SECRET:?Ustaw SESSION_SECRET w pliku .env}"
+      # Ile dni trzymać zalogowanie.
+      SESSION_DAYS: "30"
+      # Ustaw na 1 jeśli serwujesz po HTTPS (ciasteczko tylko przez TLS).
+      COOKIE_SECURE: "${COOKIE_SECURE:-0}"
+      DATA_DIR: "/data"
+    volumes:
+      - wydatki_data:/data
+
+volumes:
+  wydatki_data:
