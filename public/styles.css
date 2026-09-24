@@ -281,6 +281,41 @@ input:focus, select:focus { border-color: var(--primary); }
   .tracks { grid-template-columns: 1fr; }
 }
 
+/* ---------- Dashboard ---------- */
+.dash-hero { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.dash-total { font-size: 34px; font-weight: 800; }
+.dash-delta { font-size: 15px; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+.dash-delta.up { color: var(--red); background: rgba(255,107,107,.14); }
+.dash-delta.down { color: var(--green); background: rgba(53,196,138,.14); }
+.dash-delta.flat { color: var(--muted); background: var(--bg-2); }
+
+.trend { display: flex; align-items: flex-end; gap: 8px; height: 160px; padding-top: 8px; }
+.trend-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end; }
+.trend-bar { width: 100%; max-width: 42px; background: var(--primary); border-radius: 8px 8px 0 0; min-height: 3px; transition: height .3s ease; }
+.trend-col.current .trend-bar { background: var(--amber); }
+.trend-val { font-size: 11px; color: var(--muted); white-space: nowrap; }
+.trend-lbl { font-size: 11px; color: var(--muted); }
+.trend-col.current .trend-lbl { color: var(--amber); font-weight: 700; }
+
+.compare { display: flex; flex-direction: column; }
+.cmp-row { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; padding: 10px 2px; border-bottom: 1px solid var(--line); }
+.cmp-row:last-child { border-bottom: none; }
+.cmp-name { font-size: 14px; }
+.cmp-cur { font-size: 15px; font-weight: 700; text-align: right; }
+.cmp-delta { font-size: 12px; font-weight: 700; text-align: right; min-width: 62px; }
+.cmp-delta.up { color: var(--red); }
+.cmp-delta.down { color: var(--green); }
+.cmp-delta.flat { color: var(--muted); }
+
+.tag.auto { color: var(--amber); border-color: var(--amber); }
+.rec-item .item-title { opacity: 1; }
+.rec-off { opacity: .5; }
+.toggle {
+  background: var(--card-2); border: 1px solid var(--line); color: var(--text);
+  border-radius: 999px; padding: 5px 10px; font-size: 12px; cursor: pointer;
+}
+.toggle.on { background: rgba(53,196,138,.15); color: var(--green); border-color: var(--green); }
+
 /* ---------- Dolna nawigacja ---------- */
 .tabbar {
   position: fixed;

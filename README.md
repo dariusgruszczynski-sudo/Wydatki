@@ -6,9 +6,19 @@ JSON na wolumenie. Jedyna zależność: `express`.
 
 ## Co potrafi
 
+**Zakładka Pulpit (Dashboard)**
+- Suma wydatków bieżącego miesiąca z porównaniem do poprzedniego (▲/▼ kwota i %).
+- Poprzedni miesiąc, średnia, suma stałych płatności miesięcznych.
+- Wykres słupkowy „miesiąc do miesiąca” (ostatnie 6 miesięcy).
+- Porównanie kategorii bieżący vs poprzedni miesiąc (± zmiana).
+- Podział wspólne/własne oraz wg osoby.
+
 **Zakładka Wydatki**
 - Dodawanie wydatku: **kwota**, **kategoria zakupów**, **osoba** (Darek/Pola),
   **konto** (🤝 wspólne / 👤 własne), data i notatka.
+- **Płatności cykliczne** (abonamenty, rachunki, raty): nazwa, kwota, dzień
+  miesiąca, kategoria, osoba, konto. Generują się automatycznie w dniu płatności
+  (z możliwością włączenia/wyłączenia). Auto-wpisy oznaczone „🔁 cykl.".
 - Zarządzanie listą kategorii (dodawanie / usuwanie).
 - Podsumowanie miesięczne: suma, podział wspólne vs własne, wg osoby i wg kategorii
   (paski), przełącznik miesięcy, pełna historia z usuwaniem.
@@ -103,6 +113,8 @@ docker compose cp wydatki:/data/db.json ./backup-db.json
 ## API (skrót)
 
 - `GET/POST/DELETE /api/expenses`, `GET /api/summary`
+- `GET/POST/PATCH/DELETE /api/recurring` — płatności cykliczne
+- `GET /api/dashboard` — pulpit + porównanie miesiąc do miesiąca
 - `GET/POST/DELETE /api/categories`
 - `GET/POST/DELETE /api/savings`, `GET /api/savings/report`
 - `POST /api/auth/login|logout`, `GET /api/auth/status`

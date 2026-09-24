@@ -52,6 +52,67 @@ function isValidPerson(p) {
   return store.db.people.includes(p);
 }
 
+function curMonthISO() {
+  return todayISO().slice(0, 7); // YYYY-MM
+}
+
+// Kolejny miesiąc po podanym (YYYY-MM -> YYYY-MM).
+function nextMonth(ym) {
+  let [y, m] = ym.split('-').map(Number);
+  m += 1;
+  if (m > 12) { m = 1; y += 1; }
+  return `${y}-${String(m).padStart(2, '0')}`;
+}
+
+function daysInMonth(ym) {
+  const [y, m] = ym.split('-').map(Number);
+  return new Date(y, m, 0).getDate();
+}
+
+// Generuje realne wydatki z aktywnych płatności cyklicznych — dla każdego
+// miesiąca od startu do teraz, raz na miesiąc. Idempotentne (lastPostedMonth).
+function materializeRecurring() {
+  const now = curMonthISO();
+  const today = todayISO();
+  let changed = false;
+
+  for (const r of store.db.recurring) {
+    if (!r.active) continue;
+    let start = r.lastPostedMonth ? nextMonth(r.lastPostedMonth) : r.startMonth;
+    if (!start) { start = now; }
+    let m = start;
+    // Bezpiecznik na wypadek błędnych danych — max 240 iteracji (20 lat).
+    let guard = 0;
+    while (m <= now && guard++ < 240) {
+      const day = Math.min(Number(r.dayOfMonth) || 1, daysInMonth(m));
+      const dueDate = `${m}-${String(day).padStart(2, '0')}`;
+      if (m < now || (m === now && today >= dueDate)) {
+        const exists = store.db.expenses.some((e) => e.recurringId === r.id && (e.date || '').startsWith(m));
+        if (!exists) {
+          store.db.expenses.push({
+            id: store.id(),
+            date: dueDate,
+            category: r.category,
+            amount: r.amount,
+            person: r.person,
+            fund: r.fund,
+            note: r.name,
+            recurringId: r.id,
+            auto: true,
+            createdAt: new Date().toISOString(),
+          });
+        }
+        r.lastPostedMonth = m;
+        changed = true;
+        m = nextMonth(m);
+      } else {
+        break; // bieżący miesiąc jeszcze przed terminem
+      }
+    }
+  }
+  if (changed) store.persist();
+}
+
 // --- Kategorie -------------------------------------------------------------
 
 app.get('/api/categories', requireAuth, (req, res) => {
@@ -87,6 +148,7 @@ app.get('/api/people', requireAuth, (req, res) => {
 // --- Wydatki ---------------------------------------------------------------
 
 app.get('/api/expenses', requireAuth, (req, res) => {
+  materializeRecurring();
   const { month, person, fund, category } = req.query;
   let rows = store.db.expenses.slice();
   if (month) rows = rows.filter((e) => e.date && e.date.startsWith(month)); // YYYY-MM
@@ -135,6 +197,7 @@ app.delete('/api/expenses/:id', requireAuth, (req, res) => {
 
 // Podsumowanie wydatków (opcjonalnie za dany miesiąc YYYY-MM).
 app.get('/api/summary', requireAuth, (req, res) => {
+  materializeRecurring();
   const { month } = req.query;
   let rows = store.db.expenses.slice();
   if (month) rows = rows.filter((e) => e.date && e.date.startsWith(month));
@@ -167,6 +230,145 @@ app.get('/api/summary', requireAuth, (req, res) => {
     byPerson,
     byFund,
     months,
+  });
+});
+
+// --- Płatności cykliczne ---------------------------------------------------
+
+app.get('/api/recurring', requireAuth, (req, res) => {
+  const rows = store.db.recurring.slice().sort((a, b) => (a.name || '').localeCompare(b.name || '', 'pl'));
+  res.json(rows);
+});
+
+app.post('/api/recurring', requireAuth, (req, res) => {
+  const b = req.body || {};
+  const amount = toAmount(b.amount);
+  const name = String(b.name || '').trim().slice(0, 120);
+  const person = String(b.person || '').trim();
+  const category = String(b.category || '').trim();
+  const fund = b.fund === 'wlasne' ? 'wlasne' : 'wspolne';
+  let day = parseInt(b.dayOfMonth, 10);
+  if (!Number.isFinite(day) || day < 1) day = 1;
+  if (day > 28) day = 28; // bezpieczny zakres dla każdego miesiąca
+  const startMonth = /^\d{4}-\d{2}$/.test(b.startMonth) ? b.startMonth : curMonthISO();
+
+  if (!name) return res.status(400).json({ error: 'Podaj nazwę płatności' });
+  if (!Number.isFinite(amount) || amount <= 0) return res.status(400).json({ error: 'Kwota musi być większa od zera' });
+  if (!isValidPerson(person)) return res.status(400).json({ error: 'Wybierz osobę' });
+  if (!category) return res.status(400).json({ error: 'Wybierz kategorię' });
+
+  const row = {
+    id: store.id(),
+    name,
+    amount,
+    category,
+    person,
+    fund,
+    dayOfMonth: day,
+    startMonth,
+    active: true,
+    lastPostedMonth: '',
+    createdAt: new Date().toISOString(),
+  };
+  store.db.recurring.push(row);
+  store.persist();
+  materializeRecurring();
+  res.status(201).json(row);
+});
+
+// Włącz/wyłącz płatność cykliczną.
+app.patch('/api/recurring/:id', requireAuth, (req, res) => {
+  const r = store.db.recurring.find((x) => x.id === req.params.id);
+  if (!r) return res.status(404).json({ error: 'Nie znaleziono płatności' });
+  if (typeof (req.body || {}).active === 'boolean') r.active = req.body.active;
+  store.persist();
+  if (r.active) materializeRecurring();
+  res.json(r);
+});
+
+app.delete('/api/recurring/:id', requireAuth, (req, res) => {
+  const idx = store.db.recurring.findIndex((x) => x.id === req.params.id);
+  if (idx < 0) return res.status(404).json({ error: 'Nie znaleziono płatności' });
+  const [removed] = store.db.recurring.splice(idx, 1);
+  // Już wygenerowane wydatki zostają (to faktyczne płatności z przeszłości).
+  store.persist();
+  res.json(removed);
+});
+
+// --- Dashboard: miesięczne wydatki + porównanie miesiąc do miesiąca --------
+
+function monthTotals(ym) {
+  const rows = store.db.expenses.filter((e) => (e.date || '').startsWith(ym));
+  const total = store.round2(rows.reduce((s, e) => s + e.amount, 0));
+  const byCategory = {};
+  const byPerson = {};
+  const byFund = { wspolne: 0, wlasne: 0 };
+  for (const p of store.db.people) byPerson[p] = 0;
+  for (const e of rows) {
+    byCategory[e.category] = store.round2((byCategory[e.category] || 0) + e.amount);
+    byPerson[e.person] = store.round2((byPerson[e.person] || 0) + e.amount);
+    byFund[e.fund] = store.round2((byFund[e.fund] || 0) + e.amount);
+  }
+  return { total, byCategory, byPerson, byFund, count: rows.length };
+}
+
+app.get('/api/dashboard', requireAuth, (req, res) => {
+  materializeRecurring();
+  const nMonths = Math.min(Math.max(parseInt(req.query.months, 10) || 6, 3), 12);
+  const anchor = /^\d{4}-\d{2}$/.test(req.query.month) ? req.query.month : curMonthISO();
+
+  // Trend ostatnich N miesięcy zakończonych na 'anchor'.
+  const trend = [];
+  let m = anchor;
+  for (let i = 0; i < nMonths; i++) {
+    const t = monthTotals(m);
+    trend.unshift({ month: m, total: t.total, count: t.count });
+    // poprzedni miesiąc
+    let [y, mm] = m.split('-').map(Number);
+    mm -= 1;
+    if (mm < 1) { mm = 12; y -= 1; }
+    m = `${y}-${String(mm).padStart(2, '0')}`;
+  }
+
+  const cur = monthTotals(anchor);
+  let [py, pm] = anchor.split('-').map(Number);
+  pm -= 1;
+  if (pm < 1) { pm = 12; py -= 1; }
+  const prevMonth = `${py}-${String(pm).padStart(2, '0')}`;
+  const prev = monthTotals(prevMonth);
+
+  const delta = store.round2(cur.total - prev.total);
+  const deltaPct = prev.total > 0 ? store.round2((delta / prev.total) * 100) : null;
+
+  // Porównanie kategorii: obecny vs poprzedni miesiąc.
+  const cats = new Set([...Object.keys(cur.byCategory), ...Object.keys(prev.byCategory)]);
+  const categoryCompare = Array.from(cats).map((c) => {
+    const now = cur.byCategory[c] || 0;
+    const before = prev.byCategory[c] || 0;
+    return { category: c, current: now, previous: before, delta: store.round2(now - before) };
+  }).sort((a, b) => b.current - a.current);
+
+  // Suma aktywnych płatności cyklicznych (stałe koszty miesięczne).
+  const recurringMonthly = store.round2(
+    store.db.recurring.filter((r) => r.active).reduce((s, r) => s + r.amount, 0),
+  );
+
+  // Średnia z pełnych miesięcy w trendzie (bez zerowych z przodu).
+  const nonZero = trend.filter((t) => t.count > 0);
+  const avg = nonZero.length ? store.round2(nonZero.reduce((s, t) => s + t.total, 0) / nonZero.length) : 0;
+
+  res.json({
+    month: anchor,
+    prevMonth,
+    current: cur,
+    previous: prev,
+    delta,
+    deltaPct,
+    average: avg,
+    trend,
+    categoryCompare,
+    recurringMonthly,
+    recurringCount: store.db.recurring.filter((r) => r.active).length,
   });
 });
 
@@ -279,6 +481,12 @@ app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'] })
 app.get(/^\/(?!api\/).*/, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
+// Wygeneruj zaległe płatności cykliczne przy starcie i raz na godzinę.
+try { materializeRecurring(); } catch (e) { console.error('materializeRecurring:', e.message); }
+setInterval(() => {
+  try { materializeRecurring(); } catch (e) { console.error('materializeRecurring:', e.message); }
+}, 60 * 60 * 1000).unref();
 
 app.listen(PORT, () => {
   console.log(`Wydatki działa na porcie ${PORT} (PIN: ${auth.enabled ? 'wymagany' : 'WYŁĄCZONY'})`);

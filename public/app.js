@@ -52,6 +52,8 @@ let selExpFund = 'wspolne';
 let selSavPerson = null;
 let curMonth = todayISO().slice(0, 7);
 let savFilter = ''; // '' = wszyscy
+let selRecPerson = null;
+let selRecFund = 'wspolne';
 
 // ---------- Logowanie ----------
 function showLogin() {
@@ -112,16 +114,19 @@ function buildPersonSeg(container, onPick, current) {
 // ---------- Kategorie ----------
 async function loadCategories() {
   CATEGORIES = await api('/categories');
-  const sel = $('#expCategory');
-  const prev = sel.value;
-  sel.innerHTML = '';
-  CATEGORIES.forEach((c) => {
-    const o = document.createElement('option');
-    o.value = c;
-    o.textContent = c;
-    sel.appendChild(o);
+  ['#expCategory', '#recCategory'].forEach((selId) => {
+    const sel = $(selId);
+    if (!sel) return;
+    const prev = sel.value;
+    sel.innerHTML = '';
+    CATEGORIES.forEach((c) => {
+      const o = document.createElement('option');
+      o.value = c;
+      o.textContent = c;
+      sel.appendChild(o);
+    });
+    if (CATEGORIES.includes(prev)) sel.value = prev;
   });
-  if (CATEGORIES.includes(prev)) sel.value = prev;
 
   const list = $('#catList');
   list.innerHTML = '';
@@ -180,7 +185,7 @@ $('#expenseForm').addEventListener('submit', async (e) => {
     await api('/expenses', { method: 'POST', body: JSON.stringify(body) });
     $('#expAmount').value = '';
     $('#expNote').value = '';
-    await Promise.all([loadExpenses(), loadSummary()]);
+    await refreshAll();
   } catch (e2) {
     err.textContent = e2.message;
     err.classList.remove('hidden');
@@ -200,12 +205,14 @@ async function loadExpenses() {
     const item = document.createElement('div');
     item.className = 'item';
     const fundLabel = r.fund === 'wspolne' ? '🤝 wspólne' : '👤 własne';
+    const autoBadge = r.auto ? '<span class="tag auto">🔁 cykl.</span>' : '';
     item.innerHTML = `
       <div class="item-main">
         <div class="item-title">
           ${escapeHtml(r.category)}
           <span class="tag person-${r.person}">${escapeHtml(r.person)}</span>
           <span class="tag">${fundLabel}</span>
+          ${autoBadge}
         </div>
         <div class="item-sub">${dayLabel(r.date)}${r.note ? ' · ' + escapeHtml(r.note) : ''}</div>
       </div>
@@ -218,7 +225,7 @@ async function loadExpenses() {
     del.addEventListener('click', async () => {
       if (!confirm('Usunąć ten wydatek?')) return;
       await api('/expenses/' + r.id, { method: 'DELETE' });
-      await Promise.all([loadExpenses(), loadSummary()]);
+      await refreshAll();
     });
     item.appendChild(del);
     list.appendChild(item);
@@ -280,7 +287,7 @@ function barRow(label, amount, pct, color) {
 
 $('#monthPicker').addEventListener('change', async (e) => {
   curMonth = e.target.value;
-  await Promise.all([loadExpenses(), loadSummary()]);
+  await refreshAll();
 });
 
 // ---------- Oszczędności ----------
@@ -399,6 +406,168 @@ function buildSavFilter() {
   });
 }
 
+// ---------- Płatności cykliczne ----------
+$$('.rec-fund').forEach((b) => {
+  b.addEventListener('click', () => {
+    $$('.rec-fund').forEach((s) => s.classList.remove('active'));
+    b.classList.add('active');
+    selRecFund = b.dataset.recfund;
+  });
+});
+
+$('#recForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const err = $('#recError');
+  err.classList.add('hidden');
+  const body = {
+    name: $('#recName').value,
+    amount: $('#recAmount').value,
+    dayOfMonth: $('#recDay').value,
+    category: $('#recCategory').value,
+    person: selRecPerson,
+    fund: selRecFund,
+  };
+  try {
+    await api('/recurring', { method: 'POST', body: JSON.stringify(body) });
+    $('#recName').value = '';
+    $('#recAmount').value = '';
+    await refreshAll();
+  } catch (e2) {
+    err.textContent = e2.message;
+    err.classList.remove('hidden');
+  }
+});
+
+async function loadRecurring() {
+  const rows = await api('/recurring');
+  const list = $('#recList');
+  const total = rows.filter((r) => r.active).reduce((s, r) => s + r.amount, 0);
+  $('#recTotal').textContent = fmt(total) + ' / mies.';
+  if (!rows.length) {
+    list.innerHTML = '<div class="empty">Brak płatności cyklicznych.</div>';
+    return;
+  }
+  list.innerHTML = '';
+  rows.forEach((r) => {
+    const item = document.createElement('div');
+    item.className = 'item rec-item' + (r.active ? '' : ' rec-off');
+    const fundLabel = r.fund === 'wspolne' ? '🤝' : '👤';
+    item.innerHTML = `
+      <div class="item-main">
+        <div class="item-title">
+          ${escapeHtml(r.name)}
+          <span class="tag person-${r.person}">${escapeHtml(r.person)}</span>
+        </div>
+        <div class="item-sub">${escapeHtml(r.category)} · ${fundLabel} · ${r.dayOfMonth}. dnia mies.</div>
+      </div>
+      <div class="item-amount neg">${fmt(r.amount)}</div>
+    `;
+    const toggle = document.createElement('button');
+    toggle.className = 'toggle' + (r.active ? ' on' : '');
+    toggle.textContent = r.active ? 'wł.' : 'wył.';
+    toggle.title = 'Włącz / wyłącz';
+    toggle.addEventListener('click', async () => {
+      await api('/recurring/' + r.id, { method: 'PATCH', body: JSON.stringify({ active: !r.active }) });
+      await refreshAll();
+    });
+    const del = document.createElement('button');
+    del.className = 'del';
+    del.textContent = '🗑';
+    del.title = 'Usuń';
+    del.addEventListener('click', async () => {
+      if (!confirm('Usunąć płatność cykliczną? Wpisy z przeszłości pozostaną.')) return;
+      await api('/recurring/' + r.id, { method: 'DELETE' });
+      await refreshAll();
+    });
+    item.appendChild(toggle);
+    item.appendChild(del);
+    list.appendChild(item);
+  });
+}
+
+// ---------- Dashboard ----------
+function monthShort(ym) {
+  try {
+    return new Date(ym + '-01T00:00:00').toLocaleDateString('pl-PL', { month: 'short' });
+  } catch (_) { return ym; }
+}
+
+function deltaBadge(delta, pct) {
+  if (!delta) return { cls: 'flat', text: 'bez zmian' };
+  const arrow = delta > 0 ? '▲' : '▼';
+  const cls = delta > 0 ? 'up' : 'down';
+  const pctTxt = pct === null || pct === undefined ? '' : ` (${delta > 0 ? '+' : ''}${pct}%)`;
+  return { cls, text: `${arrow} ${fmt(Math.abs(delta))}${pctTxt}` };
+}
+
+async function loadDashboard() {
+  const d = await api('/dashboard?months=6');
+  $('#dashMonthLabel').textContent = monthLabel(d.month);
+  $('#dashTotal').textContent = fmt(d.current.total);
+
+  const badge = deltaBadge(d.delta, d.deltaPct);
+  const db = $('#dashDelta');
+  db.className = 'dash-delta ' + badge.cls;
+  db.textContent = badge.text + ' vs poprz.';
+
+  $('#dashPrev').textContent = fmt(d.previous.total);
+  $('#dashAvg').textContent = fmt(d.average);
+  $('#dashRecurring').textContent = fmt(d.recurringMonthly);
+  $('#dashShared').textContent = fmt(d.current.byFund.wspolne || 0);
+  $('#dashOwn').textContent = fmt(d.current.byFund.wlasne || 0);
+
+  // Trend (słupki miesięczne)
+  const trend = $('#dashTrend');
+  trend.innerHTML = '';
+  const maxT = Math.max(1, ...d.trend.map((t) => t.total));
+  d.trend.forEach((t) => {
+    const col = document.createElement('div');
+    col.className = 'trend-col' + (t.month === d.month ? ' current' : '');
+    const h = Math.round((t.total / maxT) * 120);
+    col.innerHTML = `
+      <div class="trend-val">${t.total ? Math.round(t.total) : ''}</div>
+      <div class="trend-bar" style="height:${t.total ? Math.max(3, h) : 3}px"></div>
+      <div class="trend-lbl">${monthShort(t.month)}</div>
+    `;
+    trend.appendChild(col);
+  });
+
+  // Podział wg osoby
+  const bp = $('#dashByPerson');
+  bp.innerHTML = '';
+  const maxP = Math.max(1, ...Object.values(d.current.byPerson));
+  Object.entries(d.current.byPerson).forEach(([person, amount]) => {
+    bp.appendChild(barRow(person, amount, (amount / maxP) * 100, person === 'Pola' ? 'var(--pola)' : 'var(--darek)'));
+  });
+
+  // Porównanie kategorii
+  const cc = $('#dashCategories');
+  cc.innerHTML = '';
+  const cats = d.categoryCompare.filter((c) => c.current > 0 || c.previous > 0);
+  if (!cats.length) {
+    cc.innerHTML = '<div class="empty">Brak danych.</div>';
+  } else {
+    cats.forEach((c) => {
+      const row = document.createElement('div');
+      row.className = 'cmp-row';
+      const dcls = c.delta > 0 ? 'up' : c.delta < 0 ? 'down' : 'flat';
+      const arrow = c.delta > 0 ? '▲' : c.delta < 0 ? '▼' : '·';
+      const dtxt = c.delta ? `${arrow} ${fmt(Math.abs(c.delta))}` : '—';
+      row.innerHTML = `
+        <div class="cmp-name">${escapeHtml(c.category)}</div>
+        <div class="cmp-cur">${fmt(c.current)}</div>
+        <div class="cmp-delta ${dcls}">${dtxt}</div>
+      `;
+      cc.appendChild(row);
+    });
+  }
+}
+
+// Odśwież wszystko po zmianie danych.
+async function refreshAll() {
+  await Promise.all([loadExpenses(), loadSummary(), loadRecurring(), loadDashboard()]);
+}
+
 // ---------- util ----------
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, (m) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
@@ -410,9 +579,11 @@ async function boot() {
   PEOPLE = await api('/people');
   selExpPerson = selExpPerson || PEOPLE[0];
   selSavPerson = selSavPerson || PEOPLE[0];
+  selRecPerson = selRecPerson || PEOPLE[0];
 
   buildPersonSeg($('#expPerson'), (p) => { selExpPerson = p; }, selExpPerson);
   buildPersonSeg($('#savPerson'), (p) => { selSavPerson = p; }, selSavPerson);
+  buildPersonSeg($('#recPerson'), (p) => { selRecPerson = p; }, selRecPerson);
   $$('.seg[data-fund]').forEach((s) => s.classList.toggle('active', s.dataset.fund === selExpFund));
   buildSavFilter();
 
@@ -421,7 +592,7 @@ async function boot() {
 
   $('#whoami').classList.add('hidden');
   await loadCategories();
-  await Promise.all([loadExpenses(), loadSummary(), loadSavingReport(), loadSavings()]);
+  await Promise.all([loadExpenses(), loadSummary(), loadRecurring(), loadDashboard(), loadSavingReport(), loadSavings()]);
 }
 
 async function init() {
