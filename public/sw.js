@@ -3,7 +3,7 @@
 // Prosty service worker: cache'uje powłokę aplikacji, żeby działała jako PWA
 // i szybciej się ładowała. Zapytania do /api zawsze idą do sieci.
 
-const CACHE = 'wydatki-v2';
+const CACHE = 'wydatki-v3';
 const SHELL = [
   '/',
   '/index.html',

@@ -59,6 +59,45 @@ function confetti(emojis = ['🪙', '💸', '✨', '🎉']) {
   }
 }
 
+// Wystrzał monet z punktu (x,y) — efekt "kasa!" przy dodaniu.
+function coinBurst(x, y, emoji = '🪙') {
+  for (let i = 0; i < 12; i++) {
+    const c = document.createElement('div');
+    c.className = 'burst-coin';
+    c.textContent = Math.random() < 0.35 ? '✨' : emoji;
+    c.style.left = x + 'px';
+    c.style.top = y + 'px';
+    document.body.appendChild(c);
+    const ang = (Math.PI * 2 * i) / 12 + Math.random() * 0.5;
+    const dist = 60 + Math.random() * 90;
+    const dx = Math.cos(ang) * dist;
+    const dy = Math.sin(ang) * dist - 40;
+    c.animate(
+      [
+        { transform: 'translate(-50%,-50%) scale(.4) rotate(0deg)', opacity: 1 },
+        { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(1.1) rotate(${(Math.random() * 720 - 360) | 0}deg)`, opacity: 1, offset: 0.7 },
+        { transform: `translate(calc(-50% + ${dx * 1.2}px), calc(-50% + ${dy + 120}px)) scale(.7)`, opacity: 0 },
+      ],
+      { duration: 900 + Math.random() * 400, easing: 'cubic-bezier(.2,.8,.3,1)' },
+    ).onfinish = () => c.remove();
+  }
+}
+
+// Efekt fali (ripple) na klikniętych elementach.
+document.addEventListener('pointerdown', (e) => {
+  const el = e.target.closest('.btn, .seg, .cat-tile, .icon-btn, .toggle');
+  if (!el) return;
+  const rect = el.getBoundingClientRect();
+  const size = Math.max(rect.width, rect.height);
+  const r = document.createElement('span');
+  r.className = 'ripple';
+  r.style.width = r.style.height = size + 'px';
+  r.style.left = (e.clientX - rect.left - size / 2) + 'px';
+  r.style.top = (e.clientY - rect.top - size / 2) + 'px';
+  el.appendChild(r);
+  setTimeout(() => r.remove(), 600);
+});
+
 function animateAmount(el, to) {
   const from = Number(el._val) || 0;
   const dur = 650;
@@ -216,6 +255,8 @@ async function quickAdd(cat, tile) {
     }) });
     tile.classList.add('flash');
     setTimeout(() => tile.classList.remove('flash'), 500);
+    const rect = tile.getBoundingClientRect();
+    coinBurst(rect.left + rect.width / 2, rect.top + rect.height / 2, cat.icon);
     $('#qeAmount').value = '';
     confetti(['💸', cat.icon, '🪙']);
     toast(`${cat.icon} ${cat.name} · ${fmt(n)}`);
@@ -261,7 +302,7 @@ async function loadSummary() {
   picker.innerHTML = '';
   sorted.forEach((m) => { const o = document.createElement('option'); o.value = m; o.textContent = monthLabel(m); if (m === curMonth) o.selected = true; picker.appendChild(o); });
 
-  $('#sumTotal').textContent = fmt(s.total);
+  animateAmount($('#sumTotal'), s.total);
   $('#sumShared').textContent = fmt(s.byFund.wspolne || 0);
   $('#sumOwn').textContent = fmt(s.byFund.wlasne || 0);
 
@@ -439,6 +480,22 @@ async function loadSavingReport() {
     const fill = card.querySelector('.jar-fill');
     const target = t.inDebt ? 0 : t.goal > 0 ? t.fillPct : (t.balance > 0 ? 22 : 0);
     setTimeout(() => { fill.style.height = target + '%'; }, 80);
+
+    // Licznik salda (liczy się w górę)
+    animateAmount(card.querySelector('.jar-balance'), t.balance);
+
+    // Bąbelki unoszące się w cieczy
+    if (target > 4) {
+      const jarEl = card.querySelector('.jar');
+      for (let i = 0; i < 4; i++) {
+        const b = document.createElement('span');
+        b.className = 'jar-bubble';
+        b.style.left = (18 + Math.random() * 60) + '%';
+        b.style.animationDuration = (2.4 + Math.random() * 2) + 's';
+        b.style.animationDelay = (Math.random() * 3) + 's';
+        jarEl.appendChild(b);
+      }
+    }
 
     // Ustawianie celu
     const input = card.querySelector('.jar-goal input');

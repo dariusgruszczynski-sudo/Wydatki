@@ -23,6 +23,12 @@
     </form>
   </div>
 
+  <!-- Animowane tło -->
+  <div class="bg-aurora" aria-hidden="true">
+    <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+    <span class="spark s1">✦</span><span class="spark s2">✦</span><span class="spark s3">✧</span><span class="spark s4">✦</span>
+  </div>
+
   <!-- Aplikacja -->
   <div id="app" class="app hidden">
     <header class="topbar">
@@ -38,7 +44,7 @@
 
     <main class="content">
       <!-- ===== ZAKŁADKA: PULPIT ===== -->
-      <section id="tab-pulpit" class="tab active">
+      <section id="tab-pulpit" class="tab">
         <div class="card hero-card">
           <div class="card-head">
             <h2>Ten miesiąc</h2>
@@ -76,7 +82,7 @@
       </section>
 
       <!-- ===== ZAKŁADKA: WYDATKI ===== -->
-      <section id="tab-wydatki" class="tab">
+      <section id="tab-wydatki" class="tab active">
         <div class="card qe-card">
           <h2>Szybki wydatek</h2>
           <div class="qe-amount-wrap">
@@ -196,8 +202,8 @@
 
     <!-- Dolna nawigacja -->
     <nav class="tabbar">
-      <button class="tabbtn active" data-tab="pulpit"><span class="tabicon">📊</span><span>Pulpit</span></button>
-      <button class="tabbtn" data-tab="wydatki"><span class="tabicon">🧾</span><span>Wydatki</span></button>
+      <button class="tabbtn active" data-tab="wydatki"><span class="tabicon">🧾</span><span>Wydatki</span></button>
+      <button class="tabbtn" data-tab="pulpit"><span class="tabicon">📊</span><span>Pulpit</span></button>
       <button class="tabbtn" data-tab="oszczednosci"><span class="tabicon">🐷</span><span>Skarbonki</span></button>
     </nav>
   </div>
