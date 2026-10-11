@@ -72,14 +72,15 @@ niezależnie.
 ```bash
 cd poker-trener
 cp .env.example .env
-nano .env      # sprawdź port BIND — domyślnie 8091, musi być INNY niż Wydatki (8090)
-               # i inny niż porty pozostałych apek na serwerze — sprawdź `docker ps`
+nano .env      # sprawdź port BIND — domyślnie 8093. Na 46.225.229.113 zajęte są
+               # m.in. 8000/8001/8002/8003/8090/8091/8092 (patrz komentarz w .env.example)
+               # — zawsze zweryfikuj przed startem: docker ps --format '{{.Names}}: {{.Ports}}'
 
 docker compose up -d --build
 docker compose logs -f
 ```
 
-Domyślnie kontener słucha na **`127.0.0.1:8091`** (ustaw w `.env` jeśli chcesz
+Domyślnie kontener słucha na **`127.0.0.1:8093`** (ustaw w `.env` jeśli chcesz
 inaczej) — tak, żeby wystawić go publicznie przez istniejący reverse proxy
 (nginx/traefik), tak jak resztę apek na `46.225.229.113`.
 
@@ -94,7 +95,7 @@ server {
     server_name poker.twojadomena.pl;
 
     location / {
-        proxy_pass http://127.0.0.1:8091;
+        proxy_pass http://127.0.0.1:8093;
         proxy_set_header Host              $host;
         proxy_set_header X-Real-IP         $remote_addr;
         proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
