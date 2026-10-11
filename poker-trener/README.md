@@ -1,145 +1,107 @@
-# Poker Trener — ICM & Push/Fold ♠️
+# Poker Trener v2 ♠️
 
-Samodzielna aplikacja (PWA) do nauki Texas Hold'em MTT: trener decyzji ICM/push-fold
-z prawdziwą matematyką (equity liczone Monte Carlo + model ICM Malmutha-Harville'a),
-lekcje teorii, quizy i dziennik rozdań. Zero zależności od zewnętrznych API/baz —
-wszystko liczone lokalnie, dane trzymane w SQLite na wolumenie.
+Aplikacja (PWA) do nauki Texas Hold'em MTT: od podstaw do gry na kilku stołach naraz.
+Działa na laptopie/tablecie (pełny układ z menu bocznym) i na telefonie (uproszczony
+układ z dolną nawigacją, gesty, instalacja na ekranie głównym).
 
-**To osobna apka, osobny kontener, osobny port** — nie ma nic wspólnego z `Wydatki`
-i nie wpływa na jej działanie. Mieszka w tym repo jako podkatalog `poker-trener/`
-tylko dla wygody (jeden serwer, jedno repo), ale wdraża się i działa całkowicie
-niezależnie.
+**Osobna apka, osobny kontener, osobny port (8093)** — nie dotyka `wydatki` ani innych
+apek na serwerze. Mieszka w repo jako podkatalog `poker-trener/`.
 
-## Co potrafi (v1)
+## Co jest w środku
 
-**Trener ICM / push-fold**
-- Dwa klasyczne scenariusze treningowe: (1) Ty open-shove'ujesz, przeciwnik na BB
-  decyduje o callu; (2) przeciwnik shove'uje, Ty na BB decydujesz call/fold.
-- Realna matematyka: equity Twojej ręki vs zasięg przeciwnika liczone Monte Carlo
-  (silnik `pokersolver`), wartość $ każdej decyzji liczona pełnym modelem ICM
-  (rekurencyjny model Malmutha-Harville'a, nie uproszczony wzór).
-- Zasięgi przeciwnika (szerokość % najlepszych rąk w zależności od pozycji i
-  efektywnego stosu) to **uproszczony, edukacyjny model** — nie pełny solver
-  GTO jak ICMIZER/HRC/GTO Wizard. Świetny do budowania nawyków i rozumienia
-  ICM, ale przed grą o realne pieniądze warto zweryfikować konkretne spoty w
-  profesjonalnym narzędziu.
-- Tryb **Speed** — limit czasu na decyzję (15s/10s/5s). To jest trening
-  "multi-tablingu": ćwiczy szybkie, poprawne decyzje pod presją czasu, bez
-  symulowania kilku stołów naraz (patrz sekcja "Czego NIE robi" poniżej).
-- Statystyki: trafność ogólna i wg typu decyzji, EV zgubione (w jednostkach
-  ICM), wykres ostatnich 14 dni, lista ostatnich decyzji.
+**Trening**
+- Trener ICM / push-fold: 7 typów spotów — open shove, call vs shove, 3-bet shove,
+  resteal, squeeze, all-in 3-way, otwarcia przy głębokich stosach.
+- Formaty: MTT, PKO (bounty), SNG, satelity, winner-takes-all; etapy: chip EV, bąbelek,
+  final table, heads-up; ante (BB ante / klasyczne / brak).
+- Realna matematyka: ICM liczony programowaniem dynamicznym, symulacja all-in z side
+  potami i bounty (Monte Carlo), próg equity ICM vs chip EV.
+- Owalny stół 2–9 graczy, wypłaty i wartość ICM każdego gracza, siatka zasięgu
+  przeciwnika, „co jeśli” (zmiana stosów, kart, typu przeciwnika, ante), wyjaśnienia,
+  deklaracja pewności, skróty klawiszowe (S/C/R/F/Spacja), gesty na telefonie.
+- Tryby: standard z filtrami i adaptacją do słabych punktów, Speed (limit czasu),
+  seria, survival, time attack, wyzwanie dnia z rankingiem, powtórki błędów (jak Anki),
+  tryb GTO / eksploatacja (typy przeciwników).
+- Symulator całego turnieju (18/45/90 graczy, MTT/PKO) i sesja multi-table 2–3 stołów
+  z asynchronicznymi decyzjami i timeoutami.
+- Ćwiczenia podstaw: porównanie i nazwy układów, kolejność akcji, nuts, outy, pot odds.
 
-**Lekcje i quizy**
-- 8 lekcji teorii (pozycja, pot odds/equity, ICM, push/fold, bąbelek, final
-  table, zasięgi przeciwnika, mental game multi-tablingu) z krótkimi quizami.
-- Progres lekcji i wyniki quizów zapisywane lokalnie.
+**Nauka** — ścieżka 6 poziomów (Nowicjusz → Mistrz), 30 lekcji z ilustracjami i
+quizami, egzaminy odblokowujące kolejne poziomy i typy spotów, test wstępny.
 
-**Dziennik rozdań**
-- Manualny log rozdań (pozycja, stos, karty, board, przebieg akcji, wynik,
-  notatki, tagi) do własnej analizy i wyłapywania leaków.
-- To **nie jest** automatyczny import hand history z PokerStars/GGPoker/innych
-  serwisów — każdy serwis ma swój format, a automatyczny parser dla kilku
-  platform to osobny, większy projekt. Roadmap v2 poniżej.
+**Narzędzia** — kalkulator ICM, kalkulator equity (ręce i zasięgi, 2–6 graczy),
+edytor zasięgów 13×13, ściągawki do druku/PDF, własny spot, eksport/backup/import.
 
-## Czego NIE robi (i dlaczego to jest OK)
+**Dziennik** — wpisy z tagami, import historii rąk PokerStars i GGPoker, replayer,
+porównanie spotów push/fold z modelem, statystyki VPIP/PFR, notatki o przeciwnikach.
 
-- **Nie czyta/nie podgląda realnych stołów w czasie gry.** To nie jest HUD ani
-  real-time assistant (RTA). Narzędzia czytające ekran/dane stołu w trakcie
-  gry na prawdziwe pieniądze są zakazane przez regulaminy większości
-  pokerowych serwisów (PokerStars, GGPoker i inni) i grożą banem konta.
-  Ta apka jest **study tool** — używasz jej między sesjami, nie podczas gry.
-- **Nie renderuje 2-3 stołów naraz.** Zgodnie z ustaleniami: "multi-tabling"
-  trenujemy jako szybkość i poprawność pod presją czasu (tryb Speed), nie
-  jako literalny silnik wielu stołów. Jeśli kiedyś chcesz dosłowny symulator
-  wielostołowy — to jest możliwe, ale to odrębny, duży projekt (własny silnik
-  rozdań na kilku stołach + boty + UI przełączania) — daj znać, jeśli wracamy
-  do tego tematu.
-- **Nie jest certyfikowanym solverem GTO.** Zasięgi są uproszczonym modelem
-  edukacyjnym (patrz wyżej).
+**Statystyki** — raport leaków, macierz pozycja × stos, trendy, wykresy, najdroższe
+błędy z powtórką, timer vs bez timera, tilt, kalibracja pewności, heatmapa rąk,
+raport miesięczny do druku.
 
-## Roadmap v2 (niezrobione teraz, zakres na kolejne iteracje)
+**Motywacja** — XP i poziomy, seria dni, 29 odznak, cele tygodniowe, ranking profili,
+wirtualny bankroll, przypomnienia push (wymagają HTTPS).
 
-- Automatyczny import hand history (parser formatu [PHH](https://phh.readthedocs.io/)
-  i/lub formatów konkretnych serwisów) + statystyki na realnych rozdaniach.
-- Ważone zasięgi (obecnie każda kombinacja w zasięgu ma równą wagę).
-- Więcej typów spotów (3-bet shove, resteal, ICM na final table 2-3 handed).
-- Prawdziwy symulator multi-table (jeśli nadal potrzebny po przetestowaniu v1).
+**Bankroll** — sesje, ROI, ABI, krzywa bankrollu, planer zgodny z zasadą 100/200 ABI.
 
----
+**Coach AI (opcjonalny)** — Claude: wyjaśnienia spotów, analiza rąk z dziennika, czat,
+plan treningowy na tydzień, podsumowanie sesji, quiz z błędów. Wymaga
+`ANTHROPIC_API_KEY`; bez klucza działają wersje regułowe (wyjaśnienia, plan, quiz).
 
-## Uruchomienie przez Docker Compose (zalecane)
+**Profile** — kilka osób z PIN-em, osobne statystyki, wspólny ranking. Motywy: kasyno
+premium, jasny, wysoki kontrast; talia 4-kolorowa; dźwięki i wibracje.
+
+## Ważne zastrzeżenia
+
+- To **study tool**, nie asystent do gry na żywo (RTA) — takie narzędzia są zakazane przez
+  regulaminy serwisów pokerowych.
+- Zasięgi przeciwników to **uproszczony model edukacyjny**, nie pełny solver GTO
+  (ICMIZER, HRC, GTO Wizard). Matematyka ICM i equity jest liczona dokładnie.
+
+## Wdrożenie (Docker Compose)
 
 ```bash
+cd ~/Wydatki && git pull
 cd poker-trener
-cp .env.example .env
-nano .env      # sprawdź port BIND — domyślnie 8093. Na 46.225.229.113 zajęte są
-               # m.in. 8000/8001/8002/8003/8090/8091/8092 (patrz komentarz w .env.example)
-               # — zawsze zweryfikuj przed startem: docker ps --format '{{.Names}}: {{.Ports}}'
-
+cp -n .env.example .env        # przy aktualizacji zostaw istniejący .env
+nano .env                      # BIND (domyślnie 0.0.0.0:8093), opcjonalnie ANTHROPIC_API_KEY
 docker compose up -d --build
 docker compose logs -f
 ```
 
-Domyślnie kontener słucha na **`127.0.0.1:8093`** (ustaw w `.env` jeśli chcesz
-inaczej) — tak, żeby wystawić go publicznie przez istniejący reverse proxy
-(nginx/traefik), tak jak resztę apek na `46.225.229.113`.
+Aktualizacja z v1: baza migruje się automatycznie przy starcie (statystyki, lekcje i
+dziennik trafiają do profilu „Darek”). Pierwszy profil nie ma PIN-u — ustaw go w
+Profil → Profil i PIN, zwłaszcza jeśli włączasz Coach AI.
 
-To osobny `docker-compose.yml`, osobny `container_name: poker-trener`, osobny
-wolumen `poker_trener_data` i osobny obraz `poker-trener:latest` — uruchomienie
-albo zatrzymanie tego kontenera **nie dotyka** kontenera `wydatki`.
+Sprawdzenie: `curl -s http://127.0.0.1:8093/api/health` → `{"ok":true}`.
 
-### Przykład nginx (subdomena z HTTPS)
+### HTTPS (zalecane)
 
-```nginx
-server {
-    server_name poker.twojadomena.pl;
+Powiadomienia push i instalacja PWA na iPhonie wymagają HTTPS. Wystaw apkę na subdomenie
+przez reverse proxy (nginx/caddy) z certyfikatem, ustaw `BIND=127.0.0.1:8093` i
+`COOKIE_SECURE=1`.
 
-    location / {
-        proxy_pass http://127.0.0.1:8093;
-        proxy_set_header Host              $host;
-        proxy_set_header X-Real-IP         $remote_addr;
-        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-    # certbot dopisze tu sekcję listen 443 + certyfikaty
-}
-```
-
-## Uruchomienie bez Dockera (Node.js ≥ 22)
-
-```bash
-cd poker-trener
-npm install
-npm start
-# domyślnie http://localhost:3000, dane w ./data/poker-trener.sqlite
-```
-
-Wymaga Node.js 22+ (używa wbudowanego modułu `node:sqlite` — bez żadnej
-natywnej zależności do kompilacji, stąd brak `better-sqlite3`/`node-gyp`
-w obrazie Dockera).
-
-## Dane i backup
-
-Wszystko (SQLite: statystyki trenera, progres lekcji, dziennik rozdań)
-trzyma się w wolumenie Dockera `poker_trener_data` → plik `/data/poker-trener.sqlite`.
-Backup:
+## Backup
 
 ```bash
 docker run --rm -v poker-trener_poker_trener_data:/data -v $(pwd):/backup alpine \
   cp /data/poker-trener.sqlite /backup/poker-trener-backup.sqlite
 ```
+albo w aplikacji: Narzędzia → Eksport / backup.
 
-## Architektura (dla kolejnych zmian)
+## Uruchomienie lokalne
 
-- `lib/deck.js` — karty, talia, losowanie.
-- `lib/equity.js` — equity Monte Carlo (ręka/zasięg vs zasięg), oparte na `pokersolver`.
-- `lib/ranges.js` — 169 typów rąk startowych, ranking siły (equity vs losowa ręka,
-  precomputed w `data/hand-strength-ranking.json`), budowanie zasięgu "top X%".
-- `lib/push-fold-tables.js` — uproszczone tabele % shove/call wg pozycji i stosu.
-- `lib/icm.js` — rekurencyjny model ICM (Malmuth-Harville), z memoizacją.
-- `lib/scenarios.js` — generator scenariuszy + rozstrzyganie decyzji (EV fold vs EV agresji).
-- `lib/content.js` + `data/lessons.json` + `data/quizzes.json` — treści edukacyjne.
-- `lib/db.js` — SQLite (`node:sqlite`), migracje `CREATE TABLE IF NOT EXISTS`.
-- `server.js` — Express, REST API + serwowanie `public/` (SPA, vanilla JS).
-- `public/` — jeden responsywny frontend: pełny layout ≥900px (laptop/tablet),
-  uproszczony układ z dolną nawigacją <900px (telefon) — ten sam kod, adaptacyjny CSS.
+```bash
+cd poker-trener && npm install && npm start   # http://localhost:3000
+```
+
+## Architektura
+
+- `lib/` — silnik: `icm.js` (ICM, DP po podzbiorach), `allin.js` (symulacja all-in,
+  side poty, bounty), `spots.js` (generator i rozstrzyganie spotów), `drills.js`,
+  `ranges.js`, `push-fold-tables.js`, `payouts.js`, `tournament.js`, `handhistory.js`,
+  `analytics.js`, `gamification.js`, `review.js`, `adaptive.js`, `coach.js`, `push.js`,
+  `db.js` (SQLite `node:sqlite` + migracje), `auth.js` (profile, PIN, sesje).
+- `routes/` — REST API (`/api/...`).
+- `data/` — lekcje, quizy, ścieżka nauki, ranking siły rąk.
+- `public/` — frontend bez frameworka (ES modules), service worker, ikony.

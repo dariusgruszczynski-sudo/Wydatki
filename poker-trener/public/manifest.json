@@ -1,9 +1,17 @@
 {
-  "name": "Poker Trener — ICM & Push/Fold",
+  "name": "Poker Trener — nauka Texas Hold'em MTT",
   "short_name": "Poker Trener",
-  "start_url": "/",
+  "description": "Trener ICM i push/fold, lekcje, symulator turnieju i analiza rąk.",
+  "lang": "pl",
+  "start_url": "/#/start",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#0b1220",
-  "theme_color": "#0f172a",
-  "icons": []
+  "orientation": "any",
+  "background_color": "#0a0f1c",
+  "theme_color": "#0a0f1c",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
 }

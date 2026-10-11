@@ -6,11 +6,19 @@ services:
     restart: unless-stopped
     # Adres nasłuchu ustawiasz zmienną BIND w pliku .env:
     #   BIND=0.0.0.0:8093       -> dostęp po IP:porcie (http://46.225.229.113:8093)
-    #   BIND=127.0.0.1:8093     -> tylko lokalnie, pod reverse proxy (nginx/traefik)
+    #   BIND=127.0.0.1:8093     -> tylko lokalnie, pod reverse proxy (nginx/caddy)
     ports:
       - "${BIND:-127.0.0.1:8093}:3000"
     environment:
       DATA_DIR: "/data"
+      # Coach AI (opcjonalnie) — klucz API Anthropic. Bez niego coach jest wyłączony.
+      ANTHROPIC_API_KEY: "${ANTHROPIC_API_KEY:-}"
+      COACH_MODEL: "${COACH_MODEL:-claude-opus-5-5}"
+      # Opcjonalne: własny sekret ciasteczek (domyślnie generowany i zapisywany w bazie).
+      SESSION_SECRET: "${SESSION_SECRET:-}"
+      # 1 = ciasteczko tylko po HTTPS (ustaw, gdy apka jest za proxy z certyfikatem).
+      COOKIE_SECURE: "${COOKIE_SECURE:-0}"
+      TZ_APP: "${TZ_APP:-Europe/Warsaw}"
     volumes:
       - poker_trener_data:/data
 

@@ -1,188 +1,28 @@
 <!doctype html>
-<html lang="pl">
+<html lang="pl" data-theme="premium">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>Poker Trener — ICM &amp; Push/Fold</title>
-<meta name="description" content="Trener ICM / push-fold, lekcje i quizy do nauki Texas Hold'em MTT" />
-<link rel="manifest" href="manifest.json" />
-<meta name="theme-color" content="#0f172a" />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>♠️</text></svg>" />
-<link rel="stylesheet" href="styles.css" />
+<title>Poker Trener</title>
+<meta name="description" content="Nauka Texas Hold'em MTT: trener ICM i push/fold, lekcje, symulator turnieju, analiza rąk." />
+<meta name="theme-color" content="#0a0f1c" />
+<link rel="manifest" href="/manifest.json" />
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png" />
+<link rel="apple-touch-icon" href="/icons/icon-192.png" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<link rel="stylesheet" href="/css/app.css" />
 </head>
 <body>
 <div id="app">
-
-  <header class="topbar">
-    <div class="brand">♠️ Poker Trener</div>
-    <nav class="tabs" id="tabs">
-      <button class="tab active" data-tab="trener">Trener ICM</button>
-      <button class="tab" data-tab="lekcje">Lekcje</button>
-      <button class="tab" data-tab="dziennik">Dziennik rozdań</button>
-      <button class="tab" data-tab="statystyki">Statystyki</button>
-    </nav>
-  </header>
-
-  <main id="views">
-
-    <section id="view-trener" class="view active">
-      <div class="layout">
-        <div class="panel config-panel">
-          <h2>Ustawienia treningu</h2>
-          <label class="field">
-            <span>Typ decyzji</span>
-            <select id="cfg-decision">
-              <option value="">Losowo (mix)</option>
-              <option value="open_shove">Ja open-shove'uję</option>
-              <option value="facing_shove">Przeciwnik shove'uje, ja na BB</option>
-            </select>
-          </label>
-          <label class="field">
-            <span>Tryb Speed (multi-tabling)</span>
-            <select id="cfg-speed">
-              <option value="0">Wyłączony</option>
-              <option value="15000">15 s na decyzję</option>
-              <option value="10000">10 s na decyzję</option>
-              <option value="5000">5 s na decyzję</option>
-            </select>
-          </label>
-          <button id="btn-new-scenario" class="btn primary wide">Nowy spot</button>
-          <p class="hint">Model push/fold i zasięgów jest uproszczony/edukacyjny — nie zastępuje pełnego solvera (ICMIZER, HRC, GTO Wizard). Matematyka ICM i equity (Monte Carlo) liczona jest realnie, w czasie rzeczywistym.</p>
-        </div>
-
-        <div class="panel table-panel">
-          <div id="scenario-empty" class="empty-state">
-            <p>Kliknij <strong>„Nowy spot”</strong>, żeby zacząć sesję treningową.</p>
-          </div>
-
-          <div id="scenario-box" class="scenario-box hidden">
-            <div class="scenario-meta">
-              <span id="meta-players"></span>
-              <span id="meta-pool"></span>
-              <span id="meta-paid"></span>
-            </div>
-
-            <div class="table-visual">
-              <div class="seat hero">
-                <div class="seat-label">Ty — <span id="hero-pos"></span></div>
-                <div class="cards" id="hero-cards"></div>
-                <div class="stack" id="hero-stack"></div>
-              </div>
-              <div class="vs">vs</div>
-              <div class="seat villain">
-                <div class="seat-label" id="villain-pos"></div>
-                <div class="cards villain-cards">🂠 🂠</div>
-                <div class="stack" id="villain-stack"></div>
-              </div>
-            </div>
-
-            <div id="timer-bar" class="timer-bar hidden"><div id="timer-fill" class="timer-fill"></div></div>
-
-            <div id="decision-prompt" class="decision-prompt"></div>
-
-            <div class="actions" id="action-buttons"></div>
-
-            <div id="result-box" class="result-box hidden"></div>
-          </div>
-        </div>
-
-        <div class="panel session-panel">
-          <h2>Ta sesja</h2>
-          <div class="session-stats" id="session-stats">
-            <div class="stat"><span class="stat-value" id="session-total">0</span><span class="stat-label">decyzji</span></div>
-            <div class="stat"><span class="stat-value" id="session-accuracy">—</span><span class="stat-label">trafność</span></div>
-            <div class="stat"><span class="stat-value" id="session-ev">0</span><span class="stat-label">EV zgubione</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="view-lekcje" class="view">
-      <div class="layout">
-        <div class="panel lessons-list-panel">
-          <h2>Lekcje</h2>
-          <ul id="lessons-list" class="lessons-list"></ul>
-        </div>
-        <div class="panel lesson-detail-panel">
-          <div id="lesson-detail" class="lesson-detail">
-            <p class="hint">Wybierz lekcję z listy.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="view-dziennik" class="view">
-      <div class="layout">
-        <div class="panel journal-form-panel">
-          <h2>Nowy wpis</h2>
-          <form id="journal-form">
-            <label class="field"><span>Tytuł / spot</span><input type="text" id="j-title" placeholder="np. AK cold 4bet FT" /></label>
-            <label class="field"><span>Etap</span>
-              <select id="j-stage">
-                <option value="early">Wczesny</option>
-                <option value="mid">Środek</option>
-                <option value="bubble">Bąbelek</option>
-                <option value="final_table">Final table</option>
-              </select>
-            </label>
-            <label class="field"><span>Pozycja</span><input type="text" id="j-position" placeholder="np. CO" /></label>
-            <label class="field"><span>Stos (bb)</span><input type="number" step="0.1" id="j-stack" /></label>
-            <label class="field"><span>Karty</span><input type="text" id="j-cards" placeholder="np. AhKd" /></label>
-            <label class="field"><span>Board</span><input type="text" id="j-board" placeholder="np. Qs7h2c" /></label>
-            <label class="field"><span>Przebieg akcji</span><textarea id="j-action" rows="2" placeholder="co się działo na każdej ulicy"></textarea></label>
-            <label class="field"><span>Wynik</span>
-              <select id="j-result">
-                <option value="win">Wygrana</option>
-                <option value="loss">Przegrana</option>
-                <option value="fold">Fold</option>
-              </select>
-            </label>
-            <label class="field"><span>Wynik (bb)</span><input type="number" step="0.1" id="j-result-bb" /></label>
-            <label class="field"><span>Notatki / leak</span><textarea id="j-notes" rows="2"></textarea></label>
-            <label class="field"><span>Tagi (po przecinku)</span><input type="text" id="j-tags" placeholder="icm, bluff, leak-call-too-wide" /></label>
-            <button type="submit" class="btn primary wide">Zapisz rozdanie</button>
-          </form>
-        </div>
-        <div class="panel journal-list-panel">
-          <h2>Historia</h2>
-          <div id="journal-list" class="journal-list"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="view-statystyki" class="view">
-      <div class="layout">
-        <div class="panel stats-overview-panel">
-          <h2>Ogólna skuteczność</h2>
-          <div id="stats-overview" class="session-stats"></div>
-        </div>
-        <div class="panel stats-breakdown-panel">
-          <h2>Wg typu decyzji</h2>
-          <div id="stats-bytype"></div>
-          <h2>Ostatnie 14 dni</h2>
-          <div id="stats-byday" class="byday-chart"></div>
-        </div>
-        <div class="panel stats-recent-panel">
-          <h2>Ostatnie decyzje</h2>
-          <div id="stats-recent" class="recent-list"></div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <nav class="bottom-nav" id="bottom-nav">
-    <button class="bnav active" data-tab="trener"><span>🎯</span>Trener</button>
-    <button class="bnav" data-tab="lekcje"><span>📘</span>Lekcje</button>
-    <button class="bnav" data-tab="dziennik"><span>📝</span>Dziennik</button>
-    <button class="bnav" data-tab="statystyki"><span>📊</span>Staty</button>
-  </nav>
-
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="main-col">
+    <header class="topbar" id="topbar"></header>
+    <main id="view" tabindex="-1"></main>
+  </div>
 </div>
-<div id="quiz-modal" class="modal hidden">
-  <div class="modal-content" id="quiz-modal-content"></div>
-</div>
-<div id="toast" class="toast hidden"></div>
-<script src="app.js"></script>
+<nav class="bottom-nav" id="bottom-nav"></nav>
+<div class="toasts" id="toasts"></div>
+<script type="module" src="/js/main.js"></script>
 </body>
 </html>

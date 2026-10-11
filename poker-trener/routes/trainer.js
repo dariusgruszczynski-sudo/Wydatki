@@ -69,7 +69,7 @@ function decide(req, body) {
   const result = S.resolveSpot(spot, action);
   At.putResolved(spot, result, req.profile.id);
   const rec = At.recordSpot(req.profile.id, spot, result, ctx);
-  const out = { ...result, spotId: spot.id, attemptId: rec.attemptId, xp: rec.xp, bankrollDelta: rec.bankrollDelta, review: rec.review, mode: ctx.mode };
+  const out = { ...result, spotId: spot.id, attemptId: rec.attemptId, xp: rec.xp, bankrollDelta: rec.bankrollDelta, review: rec.review, mode: ctx.mode, timedOut: ctx.timedOut };
 
   if (ctx.runId) {
     const run = Tn.loadRun(req.profile.id, ctx.runId);

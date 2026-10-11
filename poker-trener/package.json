@@ -1,12 +1,12 @@
 {
   "name": "poker-trener",
-  "version": "1.0.0",
-  "description": "Trener ICM / push-fold, lekcje i quizy do nauki Texas Hold'em MTT",
+  "version": "2.0.0",
+  "description": "Nauka Texas Hold'em MTT: trener ICM/push-fold, symulator turnieju, lekcje, analiza rąk, coach AI",
   "type": "commonjs",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js"
+    "start": "node --disable-warning=ExperimentalWarning server.js",
+    "dev": "node --watch --disable-warning=ExperimentalWarning server.js"
   },
   "engines": {
     "node": ">=22"
