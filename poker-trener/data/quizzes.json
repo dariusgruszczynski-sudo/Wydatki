@@ -1,0 +1,258 @@
+[
+  {
+    "id": "quiz-pozycje",
+    "lessonId": "pozycje",
+    "title": "Quiz: Pozycja przy stole",
+    "questions": [
+      {
+        "q": "Która pozycja działa jako ostatnia na każdej ulicy po flopie (przy standardowym rozdaniu)?",
+        "options": ["UTG", "Small Blind", "Button (BTN)", "Big Blind"],
+        "correctIndex": 2,
+        "explanation": "Button działa ostatni na flopie, turnie i riverze — ma najwięcej informacji przed podjęciem decyzji."
+      },
+      {
+        "q": "Dlaczego zasięg push z UTG jest węższy niż z SB przy tym samym stosie?",
+        "options": [
+          "UTG ma gorsze karty statystycznie",
+          "Z UTG więcej graczy może jeszcze zareagować (zacallować/zaresteelować)",
+          "UTG płaci wyższy blind",
+          "To tylko konwencja, nie ma matematycznego uzasadnienia"
+        ],
+        "correctIndex": 1,
+        "explanation": "Im więcej graczy jeszcze działa po Tobie, tym większe ryzyko napotkania silnej ręki — zasięg musi być węższy."
+      },
+      {
+        "q": "Gra 'poza pozycją' (out of position) oznacza, że:",
+        "options": [
+          "Siedzisz fizycznie daleko od dealera",
+          "Działasz jako pierwszy na kolejnych ulicach po flopie",
+          "Masz mniej żetonów niż przeciwnik",
+          "Nie możesz zagrać all-in"
+        ],
+        "correctIndex": 1,
+        "explanation": "SB i BB są 'poza pozycją' po flopie, bo działają przed resztą graczy na każdej kolejnej ulicy."
+      }
+    ]
+  },
+  {
+    "id": "quiz-pot-odds",
+    "lessonId": "pot-odds-equity",
+    "title": "Quiz: Pot odds i equity",
+    "questions": [
+      {
+        "q": "W puli jest 300, przeciwnik stawia 100 (pula po jego becie = 400), Ty musisz dopłacić 100. Jakie equity potrzebujesz, by call był +EV?",
+        "options": ["10%", "20%", "25%", "50%"],
+        "correctIndex": 1,
+        "explanation": "Pot odds = 100 / (400+100) = 100/500 = 20%. Potrzebujesz co najmniej 20% equity."
+      },
+      {
+        "q": "Masz flush draw (9 outów) po flopie i widzisz jeszcze dwie karty (do showdownu). Przybliżone equity to:",
+        "options": ["9%", "18%", "36%", "54%"],
+        "correctIndex": 2,
+        "explanation": "Reguła kciuka: outsy × 4 przy dwóch kartach do dojścia → 9 × 4 = 36%."
+      },
+      {
+        "q": "Call jest długoterminowo +EV, gdy:",
+        "options": [
+          "Twoje equity jest wyższe niż wymagany % z pot odds",
+          "Masz parę w ręce",
+          "Przeciwnik obstawił mniej niż połowę puli",
+          "Grasz na guziku"
+        ],
+        "correctIndex": 0,
+        "explanation": "To jest definicja +EV calla w ujęciu matematycznym — porównanie equity z wymaganym % wpłaty."
+      }
+    ]
+  },
+  {
+    "id": "quiz-icm",
+    "lessonId": "icm-podstawy",
+    "title": "Quiz: Podstawy ICM",
+    "questions": [
+      {
+        "q": "ICM (Independent Chip Model) przelicza:",
+        "options": [
+          "Żetony na $ w oparciu o strukturę wypłat i stosy wszystkich graczy",
+          "Szansę na rozdanie dobrej ręki",
+          "Tempo gry przy multi-tablingu",
+          "Liczbę rozdań do końca turnieju"
+        ],
+        "correctIndex": 0,
+        "explanation": "To właśnie definicja ICM — estymacja wartości $ stosu na podstawie wszystkich stosów i wypłat."
+      },
+      {
+        "q": "Dlaczego duży stos powinien unikać marginalnych all-inów na bąbelku?",
+        "options": [
+          "Bo zawsze przegrywa takie confrontacje",
+          "Bo wygrana daje relatywnie mało dodatkowej wartości $, a przegrana kosztuje bardzo dużo (traci szansę na 1. miejsce)",
+          "Bo regulamin turnieju to zabrania",
+          "Bo duże stosy mają gorsze karty"
+        ],
+        "correctIndex": 1,
+        "explanation": "To jest klasyczny efekt ICM — malejąca wartość marginalna kolejnych żetonów dla dużego stosu."
+      },
+      {
+        "q": "Kiedy efekt ICM jest największy?",
+        "options": [
+          "Na samym początku turnieju",
+          "Przy równych stosach wszystkich graczy",
+          "Na bąbelku i przy pay-jumpach na final table",
+          "Nigdy, ICM to tylko teoria"
+        ],
+        "correctIndex": 2,
+        "explanation": "Największe odchylenia od 'czystej' matematyki czipowej pojawiają się właśnie w tych momentach."
+      }
+    ]
+  },
+  {
+    "id": "quiz-push-fold",
+    "lessonId": "push-fold",
+    "title": "Quiz: Push/fold",
+    "questions": [
+      {
+        "q": "Push/fold jako strategia staje się dominująca, gdy efektywny stos spada poniżej około:",
+        "options": ["5bb", "20bb", "50bb", "100bb"],
+        "correctIndex": 1,
+        "explanation": "Poniżej ok. 20bb gra post-flopowa z pół-stosem traci sens — all-in-lub-fold jest prostsze i mniej błędogenne."
+      },
+      {
+        "q": "Fold equity w kontekście shove'a to:",
+        "options": [
+          "Szansa, że Twoja ręka wygra showdown",
+          "Szansa, że przeciwnik spasuje, dając Ci pulę bez konfrontacji",
+          "Procent Twojego stosu wrzucony do puli",
+          "Szansa na rebuy"
+        ],
+        "correctIndex": 1,
+        "explanation": "Fold equity to dodatkowa wartość shove'a wynikająca z szansy, że przeciwnik po prostu spasuje."
+      },
+      {
+        "q": "Dlaczego shove ze słabą ręką może być +EV nawet z niskim equity przy callu?",
+        "options": [
+          "Bo karty nie mają znaczenia w pokerze",
+          "Bo fold equity + ICM mogą rekompensować słabe equity w przypadku calla",
+          "Bo słabe ręce zawsze wygrywają showdown",
+          "To nigdy nie jest +EV"
+        ],
+        "correctIndex": 1,
+        "explanation": "Łączne EV to suma scenariusza 'przeciwnik pasuje' i 'przeciwnik zacalluje' — fold equity może to przeważyć."
+      }
+    ]
+  },
+  {
+    "id": "quiz-bubble",
+    "lessonId": "bubble",
+    "title": "Quiz: Gra na bąbelku",
+    "questions": [
+      {
+        "q": "Bąbelek to moment:",
+        "options": [
+          "Tuż po starcie turnieju",
+          "Tuż przed wejściem do pieniędzy (ITM)",
+          "Na final table",
+          "Po zdobyciu 1. miejsca"
+        ],
+        "correctIndex": 1,
+        "explanation": "To właśnie definicja bąbelka — ostatni gracz przed strefą wypłat."
+      },
+      {
+        "q": "Kto najlepiej może wywierać presję na bąbelku?",
+        "options": [
+          "Najkrótszy stos przy stole",
+          "Gracz z komfortowym, większym stosem",
+          "Gracz na big blindzie zawsze",
+          "Nikt, na bąbelku wszyscy grają identycznie"
+        ],
+        "correctIndex": 1,
+        "explanation": "Większy stos może 'przehandlować' ryzyko eliminacji na presję wobec graczy, którzy bardzo boją się odpadnięcia bez pieniędzy."
+      }
+    ]
+  },
+  {
+    "id": "quiz-final-table",
+    "lessonId": "final-table",
+    "title": "Quiz: Final table i pay jumps",
+    "questions": [
+      {
+        "q": "Pay jump to:",
+        "options": [
+          "Zmiana wysokości blindów",
+          "Różnica w wypłacie między kolejnymi miejscami",
+          "Dodatkowa pula bonusowa",
+          "Moment zmiany stolika"
+        ],
+        "correctIndex": 1,
+        "explanation": "To właśnie definicja pay jumpu — i to on determinuje, jak 'drogi' jest każdy błąd ICM na final table."
+      },
+      {
+        "q": "Typowe struktury wypłat w MTT są:",
+        "options": [
+          "Płaskie — każde miejsce dostaje podobną kwotę",
+          "Top-heavy — 1. miejsce bierze nieproporcjonalnie dużo",
+          "Losowe przy każdym turnieju",
+          "Zawsze równe 50/50 dla dwóch finalistów"
+        ],
+        "correctIndex": 1,
+        "explanation": "Większość struktur MTT silnie premiuje górne miejsca, co napędza wagę decyzji ICM na final table."
+      }
+    ]
+  },
+  {
+    "id": "quiz-zasiegi",
+    "lessonId": "zasiegi-przeciwnika",
+    "title": "Quiz: Zasięg przeciwnika",
+    "questions": [
+      {
+        "q": "Myślenie 'w zasięgach' oznacza:",
+        "options": [
+          "Zgadywanie dwóch konkretnych kart przeciwnika",
+          "Rozważanie całego zbioru rąk, jakie przeciwnik mógłby zagrać w danej sytuacji",
+          "Granie tylko najlepszych kart",
+          "Liczenie tylko swoich outów"
+        ],
+        "correctIndex": 1,
+        "explanation": "To jest podstawowa różnica między graczem początkującym a doświadczonym — myślenie w kategoriach zasięgu, nie jednej ręki."
+      },
+      {
+        "q": "W module ICM w tej aplikacji Twoja decyzja jest sprawdzana przeciwko:",
+        "options": [
+          "Jednej losowej karcie przeciwnika",
+          "Całemu przypisanemu zasięgowi przeciwnika (symulacja Monte Carlo)",
+          "Statystykom z ostatniego turnieju WSOP",
+          "Zawsze przeciwko AA"
+        ],
+        "correctIndex": 1,
+        "explanation": "Silnik equity symuluje tysiące rozdań Twojej ręki kontra cały zasięg przypisany przeciwnikowi."
+      }
+    ]
+  },
+  {
+    "id": "quiz-multitabling",
+    "lessonId": "multitabling-mental",
+    "title": "Quiz: Mental game multi-tablingu",
+    "questions": [
+      {
+        "q": "Dlaczego push/fold i podstawy ICM są dobrym fundamentem pod multi-tabling?",
+        "options": [
+          "Bo są najrzadziej spotykanymi sytuacjami",
+          "Bo powtarzają się bardzo często i nadają się do 'zautomatyzowania' poprawnej reakcji",
+          "Bo nie wymagają żadnej matematyki",
+          "Bo dotyczą tylko final table"
+        ],
+        "correctIndex": 1,
+        "explanation": "Częste, powtarzalne decyzje najbardziej zyskują na wyrobieniu odruchu poprawnej gry."
+      },
+      {
+        "q": "Tryb 'Speed' w trenerze ICM służy do:",
+        "options": [
+          "Szybszego liczenia equity przez serwer",
+          "Ćwiczenia poprawnych decyzji pod limitem czasu, zbliżonym do presji multi-tablingu",
+          "Pomijania trudnych spotów",
+          "Automatycznego grania za Ciebie"
+        ],
+        "correctIndex": 1,
+        "explanation": "To właśnie trening reflexu decyzyjnego pod presją czasu — kluczowego przy graniu kilku stołów naraz."
+      }
+    ]
+  }
+]

@@ -1,0 +1,129 @@
+[
+  {
+    "id": "pozycje",
+    "title": "Pozycja przy stole",
+    "summary": "Dlaczego ta sama karta jest grywalna z guzika, a folderem z UTG.",
+    "keyPoints": [
+      "Pozycja = ile informacji masz o przeciwnikach przed swoją decyzją.",
+      "Im później działasz, tym szerszy zasięg możesz grać z zyskiem.",
+      "UTG/early position: zasięg najwęższy, grasz tylko silne ręce.",
+      "CO i BTN: najszersze zasięgi, bo działasz jako ostatni (lub przedostatni).",
+      "SB i BB: gra 'poza pozycją' po flopie — kompensujesz to ceną zamknięcia akcji przedflopowo."
+    ],
+    "body": [
+      "W Texas Hold'em każda runda licytacji po preflopie zaczyna się od gracza najbliżej po lewej od dealera. Gracz na guziku (BTN) działa jako ostatni na każdej kolejnej ulicy — widzi wszystkie decyzje przeciwników przed swoją. To ogromna przewaga informacyjna.",
+      "W turniejach, gdzie stosy się spłaszczają i liczy się ICM, pozycja nabiera jeszcze większego znaczenia — błąd pozycyjny (np. open-raise z UTG szerokim zasięgiem) kosztuje więcej, bo nie masz jak się z niego wycofać bez strat.",
+      "Dla treningu push/fold: zasięgi przesunięcia (shove) rozszerzają się w kolejności UTG < MP < CO < SB, właśnie dlatego, że z każdą kolejną pozycją jest mniej graczy, którzy mogą jeszcze zareagować."
+    ]
+  },
+  {
+    "id": "pot-odds-equity",
+    "title": "Pot odds i equity",
+    "summary": "Matematyczny fundament każdej decyzji call/fold.",
+    "keyPoints": [
+      "Pot odds = ile musisz wpłacić względem tego, co jest już w puli.",
+      "Equity = Twoja szansa na wygranie rozdania w danym momencie.",
+      "Call jest +EV, gdy Twoje equity > wymagany % wpłaty (pot odds).",
+      "Liczenie 'outs razy 2 (lub 4)' to szybki szacunek equity po flopie/turnie."
+    ],
+    "body": [
+      "Pot odds liczysz tak: kwota_do_wpłacenia / (pula_po_Twoim_callu). Jeśli musisz dopłacić 100 do puli, która po callu będzie miała 400, to potrzebujesz 25% equity, żeby call się opłacał długoterminowo.",
+      "W treningu push/fold równowartością 'pot odds' jest porównanie EV(call) i EV(fold) liczone już nie w czipach, a w ICM — bo w turnieju ważniejsze jest, ile wart jest Twój stos w kontekście struktury wypłat, nie sama ilość żetonów.",
+      "Reguła kciuka: licząc outsy po flopie, przybliżasz equity jako outsy×4 (do river z dwoma kartami do dojścia) albo outsy×2 (tylko do jednej następnej karty)."
+    ]
+  },
+  {
+    "id": "icm-podstawy",
+    "title": "Co to jest ICM i dlaczego zmienia decyzje",
+    "summary": "Dlaczego czip nie jest czipem, kiedy na stole leżą realne pieniądze.",
+    "keyPoints": [
+      "ICM (Independent Chip Model) przelicza stosy żetonów na wartość $ w oparciu o strukturę wypłat.",
+      "Dodatkowe żetony mają mniejszą wartość marginalną niż te, które już masz — zwłaszcza gdy jesteś dużym stosem.",
+      "Krótki stos 'ryzykuje mniej' w ujęciu $ niż w ujęciu czipów — stąd czasem warto grać luźniej, czasem dużo ciaśniej niż przy cash game.",
+      "Największy wpływ ICM ma na bąbelku (przed pieniędzmi) i przy pay-jumpach na final table."
+    ],
+    "body": [
+      "W cash game 1 żeton = 1 żeton, niezależnie od tego, ile ich masz. W turnieju żetony nie są wymienne na pieniądze w trakcie gry — ich wartość zależy od tego, jak wpływają na Twoje szanse dotarcia do kolejnych, lepiej płacących miejsc.",
+      "Klasyczny efekt ICM: duży stos nie powinien ryzykować całego stosu w marginalnej sytuacji przeciwko krótkiemu stosowi na bąbelku — bo nawet jeśli wygra, 'kupuje' względnie mało dodatkowej wartości $, a jeśli przegra, traci bardzo dużo (traci szansę na 1. miejsce).",
+      "Z kolei krótki stos na bąbelku często MUSI grać agresywniej niż 'czysto matematycznie' wskazywałyby czipy, bo i tak jest blisko eliminacji — 'nie ma nic do stracenia' relatywnie do stawki, jaką jest awans do pieniędzy.",
+      "Trener ICM w tej aplikacji liczy właśnie to: realną wartość $ Twojego stosu przed i po decyzji, przy zadanej strukturze wypłat i stosach wszystkich graczy."
+    ]
+  },
+  {
+    "id": "push-fold",
+    "title": "Push/fold — kiedy i dlaczego",
+    "summary": "Gra bez możliwości late-street decyzji, czyli matematyka zamiast czytania przeciwnika.",
+    "keyPoints": [
+      "Poniżej ~20bb efektywnego stosu gra post-flopowa traci sens — decyzja all-in-lub-fold jest prostsza i mniej błędogenna.",
+      "Zasięg push zależy od: pozycji, efektywnego stosu i tego, kto jeszcze może Cię zacallować.",
+      "Zasięg call vs shove zależy od: zasięgu przeciwnika (jego pozycji i stosu) oraz Twojego ICM-ryzyka.",
+      "Fold equity (szansa, że przeciwnik spasuje) jest częścią EV shove'a — czasem shove jest +EV nawet ze słabą ręką."
+    ],
+    "body": [
+      "Push/fold to uproszczony, ale matematycznie bardzo precyzyjny sposób gry krótkimi stosami. Zamiast liczyć wielopoziomowe linie na kilku ulicach, liczysz jedną decyzję: cały stos albo pas.",
+      "Siła zasięgu push zależy głównie od tego, ile 'miejsca' masz przed sobą — im bliżej guzika, tym mniej graczy może Cię jeszcze zacallować, więc zasięg rośnie.",
+      "W tej aplikacji trenujesz dwa klasyczne scenariusze: (1) Ty open-shove'ujesz, a big blind decyduje, czy Cię zacallować; (2) przeciwnik shove'uje, a Ty (na big blindzie) decydujesz call czy fold."
+    ]
+  },
+  {
+    "id": "bubble",
+    "title": "Gra na bąbelku",
+    "summary": "Moment, gdy ICM najbardziej 'wygina' matematykę czipową.",
+    "keyPoints": [
+      "Bąbelek = moment tuż przed wejściem do pieniędzy (ITM).",
+      "Krótkie stosy na bąbelku są naturalnymi celami do wywierania presji.",
+      "Średnie i duże stosy powinny unikać marginalnych confrontacji z innymi dużymi/średnimi stosami.",
+      "Presja (agresja) na bąbelku działa najlepiej na stosy, które najbardziej boją się eliminacji tuż przed pieniędzmi."
+    ],
+    "body": [
+      "Na bąbelku różnica między 'zostać bez pieniędzy' i 'wejść do ITM' jest z punktu widzenia ICM ogromna — często większa niż różnica między sąsiednimi miejscami w głębi wypłat.",
+      "To sprawia, że krótkie i średnie stosy grają wyjątkowo ciasno — i to właśnie otwiera miejsce na presję od graczy z komfortowym stosem, którzy mogą sobie pozwolić na odpadnięcie bez katastrofalnych strat ICM."
+    ]
+  },
+  {
+    "id": "final-table",
+    "title": "Final table i pay jumps",
+    "summary": "Ostatnie kilka miejsc, gdzie jedna decyzja może kosztować (lub dać) kilkadziesiąt procent nagrody.",
+    "keyPoints": [
+      "Pay jump = różnica w wypłacie między kolejnymi miejscami.",
+      "Im bliżej szczytu struktury wypłat, tym większe pay jumpy — i tym ważniejsza staje się ICM-matematyka.",
+      "Krótki stos na final table często powinien grać ciaśniej niż 'czipowo' optymalnie, żeby nie zderzyć się z dużym stosem w marginalnym spocie.",
+      "Duży stos na final table ma naturalną przewagę — może wywierać presję na średnie stosy, które bronią swojego miejsca w strukturze wypłat."
+    ],
+    "body": [
+      "Struktury wypłat są z reguły bardzo 'top-heavy' — 1. miejsce bierze nieproporcjonalnie dużo względem miejsc niższych. To oznacza, że na final table walka o przetrwanie (przejście z 9. na 6. miejsce) jest często mniej warta ICM-owo niż się wydaje z perspektywy czipów, a walka o 1-2 miejsce jest warta bardzo dużo.",
+      "Dlatego na final table klasyczny błąd to 'przeciążanie' średnich stosów w marginalnych confrontacjach, które niosą duże ryzyko ICM, a niewielką nagrodę w porównaniu z czekaniem na lepszy spot."
+    ]
+  },
+  {
+    "id": "zasiegi-przeciwnika",
+    "title": "Czytanie zasięgu przeciwnika",
+    "summary": "Myślenie w kategoriach 'co może mieć' zamiast 'co ja mam'.",
+    "keyPoints": [
+      "Zasięg = zbiór wszystkich rąk, jakie przeciwnik mógłby zagrać w danej sytuacji.",
+      "Pozycja, rozmiar stosu i wcześniejsza akcja zawężają ten zbiór.",
+      "Dobra decyzja to taka, która jest +EV na całym zasięgu przeciwnika, nie tylko na konkretnej karcie, którą 'czujesz'.",
+      "W tej apce zasięgi są uproszczonym % najlepszych kombinacji — nie pełnym, ważonym solverem."
+    ],
+    "body": [
+      "Zamiast zgadywać dwie konkretne karty przeciwnika, dobrzy gracze myślą w kategoriach pełnego zasięgu — np. 'z tego stosu, z tej pozycji, przeciwnik shove'uje jakieś 20% najlepszych rąk'.",
+      "W module ICM trenujesz właśnie to: Twoja decyzja jest sprawdzana przeciwko całemu przypisanemu zasięgowi przeciwnika (symulacja Monte Carlo), a nie jednej losowej karcie."
+    ]
+  },
+  {
+    "id": "multitabling-mental",
+    "title": "Mental game przy multi-tablingu",
+    "summary": "Jak grać 2-3 turnieje naraz bez spadku jakości decyzji.",
+    "keyPoints": [
+      "Każdy dodatkowy stół to mniej czasu na każdą decyzję — automatyzuj to, co się da (standardowe spoty, checklisty).",
+      "Push/fold i podstawowe ICM-reguły to pierwsze kandydaci do 'automatyzacji' pod presją czasu.",
+      "Rutyna > improwizacja: ustal sobie z góry zasady dla najczęstszych sytuacji (krótki stos, bąbelek, open-shove z danej pozycji).",
+      "Tryb 'Speed' w trenerze ICM w tej apce służy właśnie do ćwiczenia szybkich, poprawnych decyzji pod presją czasu."
+    ],
+    "body": [
+      "Multi-tabling nie polega na 'myśleniu szybciej' — polega na tym, żeby jak najwięcej decyzji było już wcześniej przygotowanych w głowie jako odruch, a nie świeże przeliczanie od zera.",
+      "Dlatego trening push/fold i podstaw ICM jest tak dobrym fundamentem pod multi-tabling: to właśnie te decyzje powtarzają się najczęściej i najbardziej nadają się do 'zautomatyzowania' poprawnej reakcji.",
+      "Użyj trybu Speed (limit czasu na decyzję) w trenerze, żeby budować te odruchy w warunkach zbliżonych do gry na kilku stołach naraz."
+    ]
+  }
+]
