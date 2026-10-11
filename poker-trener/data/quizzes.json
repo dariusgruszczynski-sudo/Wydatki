@@ -6,7 +6,12 @@
     "questions": [
       {
         "q": "Która pozycja działa jako ostatnia na każdej ulicy po flopie (przy standardowym rozdaniu)?",
-        "options": ["UTG", "Small Blind", "Button (BTN)", "Big Blind"],
+        "options": [
+          "UTG",
+          "Small Blind",
+          "Button (BTN)",
+          "Big Blind"
+        ],
         "correctIndex": 2,
         "explanation": "Button działa ostatni na flopie, turnie i riverze — ma najwięcej informacji przed podjęciem decyzji."
       },
@@ -41,13 +46,23 @@
     "questions": [
       {
         "q": "W puli jest 300, przeciwnik stawia 100 (pula po jego becie = 400), Ty musisz dopłacić 100. Jakie equity potrzebujesz, by call był +EV?",
-        "options": ["10%", "20%", "25%", "50%"],
+        "options": [
+          "10%",
+          "20%",
+          "25%",
+          "50%"
+        ],
         "correctIndex": 1,
         "explanation": "Pot odds = 100 / (400+100) = 100/500 = 20%. Potrzebujesz co najmniej 20% equity."
       },
       {
         "q": "Masz flush draw (9 outów) po flopie i widzisz jeszcze dwie karty (do showdownu). Przybliżone equity to:",
-        "options": ["9%", "18%", "36%", "54%"],
+        "options": [
+          "9%",
+          "18%",
+          "36%",
+          "54%"
+        ],
         "correctIndex": 2,
         "explanation": "Reguła kciuka: outsy × 4 przy dwóch kartach do dojścia → 9 × 4 = 36%."
       },
@@ -111,7 +126,12 @@
     "questions": [
       {
         "q": "Push/fold jako strategia staje się dominująca, gdy efektywny stos spada poniżej około:",
-        "options": ["5bb", "20bb", "50bb", "100bb"],
+        "options": [
+          "5bb",
+          "20bb",
+          "50bb",
+          "100bb"
+        ],
         "correctIndex": 1,
         "explanation": "Poniżej ok. 20bb gra post-flopowa z pół-stosem traci sens — all-in-lub-fold jest prostsze i mniej błędogenne."
       },
@@ -165,6 +185,17 @@
         ],
         "correctIndex": 1,
         "explanation": "Większy stos może 'przehandlować' ryzyko eliminacji na presję wobec graczy, którzy bardzo boją się odpadnięcia bez pieniędzy."
+      },
+      {
+        "q": "Masz średni stos na bąbelku, a krótki stos idzie all-in. Co zwykle robisz z marginalną ręką?",
+        "options": [
+          "Sprawdzasz — duża pula",
+          "Pasujesz — przegrana kosztowałaby Cię miejsce w pieniądzach, a krótki stos może zaraz odpaść",
+          "Przebijasz",
+          "Zawsze sprawdzasz z asem"
+        ],
+        "correctIndex": 1,
+        "explanation": "Na bąbelku risk premium średniego stosu jest wysokie — marginalny call jest zwykle błędem."
       }
     ]
   },
@@ -194,6 +225,17 @@
         ],
         "correctIndex": 1,
         "explanation": "Większość struktur MTT silnie premiuje górne miejsca, co napędza wagę decyzji ICM na final table."
+      },
+      {
+        "q": "Na final table dwa średnie stosy rozważają starcie, a przy stole jest stos 3bb. Co mówi ICM?",
+        "options": [
+          "Walczcie śmiało",
+          "Unikajcie marginalnych starć — odpadnięcie krótkiego stosu da wam pay jump bez ryzyka",
+          "Zawsze all-in",
+          "Nie ma znaczenia"
+        ],
+        "correctIndex": 1,
+        "explanation": "Czekanie na eliminację krótkiego stosu to darmowy wzrost wartości ICM."
       }
     ]
   },
@@ -223,6 +265,17 @@
         ],
         "correctIndex": 1,
         "explanation": "Silnik equity symuluje tysiące rozdań Twojej ręki kontra cały zasięg przypisany przeciwnikowi."
+      },
+      {
+        "q": "Przeciwnik z UTG idzie all-in za 10bb. Jakie założenie o jego zasięgu jest najrozsądniejsze?",
+        "options": [
+          "Dowolne dwie karty",
+          "Wąski, silny zasięg (ok. 15–20%)",
+          "Tylko AA",
+          "Same blefy"
+        ],
+        "correctIndex": 1,
+        "explanation": "Z wczesnej pozycji, z ośmioma graczami za sobą, shove'uje się węższym zasięgiem."
       }
     ]
   },
@@ -252,6 +305,897 @@
         ],
         "correctIndex": 1,
         "explanation": "To właśnie trening reflexu decyzyjnego pod presją czasu — kluczowego przy graniu kilku stołów naraz."
+      },
+      {
+        "q": "Ile stołów dla gracza uczącego się MTT na początek?",
+        "options": [
+          "1–2, potem stopniowo 3",
+          "Od razu 8",
+          "Zawsze 1",
+          "Tyle, ile mieści ekran"
+        ],
+        "correctIndex": 0,
+        "explanation": "Dodawaj stoły dopiero, gdy jakość decyzji na mniejszej liczbie jest stabilna."
+      }
+    ]
+  },
+  {
+    "id": "quiz-zasady",
+    "lessonId": "zasady",
+    "title": "Quiz: Zasady i przebieg rozdania",
+    "questions": [
+      {
+        "q": "Ile kart wspólnych pojawia się na stole do rivera?",
+        "options": [
+          "3",
+          "4",
+          "5",
+          "7"
+        ],
+        "correctIndex": 2,
+        "explanation": "Flop (3) + turn (1) + river (1) = 5 kart wspólnych."
+      },
+      {
+        "q": "Kto zaczyna licytację przed flopem?",
+        "options": [
+          "Small blind",
+          "Big blind",
+          "Gracz po lewej od big blinda (UTG)",
+          "Button"
+        ],
+        "correctIndex": 2,
+        "explanation": "Przed flopem pierwszy działa UTG, blindy działają na końcu."
+      },
+      {
+        "q": "Co dzieje się, gdy wszyscy przeciwnicy spasują na Twój zakład?",
+        "options": [
+          "Dochodzi do showdownu",
+          "Wygrywasz pulę bez pokazywania kart",
+          "Pula przechodzi do następnego rozdania",
+          "Rozdanie jest powtarzane"
+        ],
+        "correctIndex": 1,
+        "explanation": "Gdy zostajesz sam w rozdaniu, zgarniasz pulę bez showdownu."
+      }
+    ]
+  },
+  {
+    "id": "quiz-uklady",
+    "lessonId": "uklady",
+    "title": "Quiz: Układy kart",
+    "questions": [
+      {
+        "q": "Który układ jest silniejszy?",
+        "options": [
+          "Strit",
+          "Kolor",
+          "Trójka",
+          "Dwie pary"
+        ],
+        "correctIndex": 1,
+        "explanation": "Kolor bije strita, trójkę i dwie pary."
+      },
+      {
+        "q": "Masz A♠K♦, przeciwnik A♣Q♥, board A♥8♣5♦2♠J♠. Kto wygrywa?",
+        "options": [
+          "Ty — lepszy kicker (K)",
+          "Przeciwnik",
+          "Remis",
+          "Zależy od koloru"
+        ],
+        "correctIndex": 0,
+        "explanation": "Obaj macie parę asów; Twój kicker K bije damę przeciwnika."
+      },
+      {
+        "q": "Czy A-2-3-4-5 to strit?",
+        "options": [
+          "Nie, as jest zawsze najwyższy",
+          "Tak — to najniższy strit (wheel)",
+          "Tylko w kolorze",
+          "Tylko w Omaha"
+        ],
+        "correctIndex": 1,
+        "explanation": "As może grać jako najniższa karta w stricie A-2-3-4-5."
+      }
+    ]
+  },
+  {
+    "id": "quiz-blindy-struktura",
+    "lessonId": "blindy-struktura",
+    "title": "Quiz: Blindy i struktura",
+    "questions": [
+      {
+        "q": "Masz 4500 żetonów przy blindach 150/300. Ile to bb?",
+        "options": [
+          "15bb",
+          "30bb",
+          "45bb",
+          "9bb"
+        ],
+        "correctIndex": 0,
+        "explanation": "4500 / 300 = 15bb."
+      },
+      {
+        "q": "Co powoduje BB ante?",
+        "options": [
+          "Zmniejsza pulę",
+          "Powiększa pulę i zachęca do walki o blindy",
+          "Eliminuje small blinda",
+          "Zmienia kolejność akcji"
+        ],
+        "correctIndex": 1,
+        "explanation": "Ante powiększa pulę przed rozdaniem — kradzież staje się bardziej opłacalna."
+      },
+      {
+        "q": "Dlaczego licz stos w bb, a nie w żetonach?",
+        "options": [
+          "Bo tak wygodniej zapisać",
+          "Bo wartość stosu zależy od wysokości blindów — 3000 żetonów może być dużym albo małym stosem",
+          "Bo żetony nie mają znaczenia",
+          "Bo tak każe regulamin"
+        ],
+        "correctIndex": 1,
+        "explanation": "Siła stosu to jego relacja do blindów — dlatego mówimy o stosach w bb."
+      }
+    ]
+  },
+  {
+    "id": "quiz-reka-startowa",
+    "lessonId": "reka-startowa",
+    "title": "Quiz: Ręce startowe",
+    "questions": [
+      {
+        "q": "Ile kombinacji ma ręka offsuit (np. AKo)?",
+        "options": [
+          "4",
+          "6",
+          "12",
+          "16"
+        ],
+        "correctIndex": 2,
+        "explanation": "Offsuit = 12 kombinacji, suited = 4, para = 6."
+      },
+      {
+        "q": "Dlaczego A7o z wczesnej pozycji to słaba ręka?",
+        "options": [
+          "Bo jest za silna",
+          "Bo łatwo trafić na dominację przez lepsze asy",
+          "Bo nie można z nią wygrać",
+          "Bo jest suited"
+        ],
+        "correctIndex": 1,
+        "explanation": "Gdy trafisz asa, często przegrywasz z lepszym kickerem (AK, AQ, AJ...)."
+      },
+      {
+        "q": "Co oznacza pole nad przekątną w siatce 13×13?",
+        "options": [
+          "Pary",
+          "Ręce suited",
+          "Ręce offsuit",
+          "Ręce zakazane"
+        ],
+        "correctIndex": 1,
+        "explanation": "Przekątna = pary, nad nią suited, pod nią offsuit."
+      }
+    ]
+  },
+  {
+    "id": "quiz-outy",
+    "lessonId": "outy",
+    "title": "Quiz: Outy",
+    "questions": [
+      {
+        "q": "Ile outów ma flush draw?",
+        "options": [
+          "4",
+          "8",
+          "9",
+          "13"
+        ],
+        "correctIndex": 2,
+        "explanation": "13 kart w kolorze − 4 widoczne = 9 outów."
+      },
+      {
+        "q": "Masz 8 outów na flopie. Jakie przybliżone equity do rivera?",
+        "options": [
+          "8%",
+          "16%",
+          "32%",
+          "50%"
+        ],
+        "correctIndex": 2,
+        "explanation": "Reguła 4: 8 × 4 = 32%."
+      },
+      {
+        "q": "Co to jest „brudny” out?",
+        "options": [
+          "Karta, która daje Ci układ, ale nadal przegrywasz",
+          "Karta zagięta",
+          "Karta z poprzedniego rozdania",
+          "Każdy out na riverze"
+        ],
+        "correctIndex": 0,
+        "explanation": "Np. kolor, gdy przeciwnik dostaje lepszy kolor albo fulla."
+      }
+    ]
+  },
+  {
+    "id": "quiz-nuts-board",
+    "lessonId": "nuts-board",
+    "title": "Quiz: Odczyt boardu",
+    "questions": [
+      {
+        "q": "Board K♠K♦7♣2♥9♠. Co jest nuts?",
+        "options": [
+          "Kolor",
+          "Kareta królów",
+          "Strit",
+          "Full królów na siódemkach"
+        ],
+        "correctIndex": 1,
+        "explanation": "Para na boardzie umożliwia karetę — K-K w ręce daje karetę królów."
+      },
+      {
+        "q": "Który board jest najbardziej „mokry”?",
+        "options": [
+          "K♣7♦2♥",
+          "A♠A♦A♣",
+          "J♥T♥9♣",
+          "Q♠6♦2♣"
+        ],
+        "correctIndex": 2,
+        "explanation": "Połączone karty i dwie w kolorze — możliwe strity, draw do koloru."
+      },
+      {
+        "q": "Na boardzie są trzy piki. Co jest możliwe, czego nie było przy dwóch?",
+        "options": [
+          "Para",
+          "Kolor",
+          "Trójka",
+          "Nic"
+        ],
+        "correctIndex": 1,
+        "explanation": "Trzy karty w kolorze na boardzie umożliwiają kolor z dwiema kartami w ręce."
+      }
+    ]
+  },
+  {
+    "id": "quiz-ev",
+    "lessonId": "ev",
+    "title": "Quiz: Expected Value",
+    "questions": [
+      {
+        "q": "Zakład wygrywasz 40% razy (+10) i przegrywasz 60% (−5). EV?",
+        "options": [
+          "−1",
+          "+1",
+          "+2",
+          "+5"
+        ],
+        "correctIndex": 1,
+        "explanation": "0,4×10 − 0,6×5 = 4 − 3 = +1."
+      },
+      {
+        "q": "Zagrałeś all-in jako 80% faworyt i przegrałeś. To był:",
+        "options": [
+          "Błąd",
+          "Dobra decyzja z pechowym wynikiem",
+          "Tilt",
+          "Zła ręka"
+        ],
+        "correctIndex": 1,
+        "explanation": "Jakość decyzji ocenia się po EV, nie po wyniku pojedynczego rozdania."
+      },
+      {
+        "q": "Czym różni się $EV od chip EV?",
+        "options": [
+          "Niczym",
+          "$EV uwzględnia strukturę wypłat (ICM)",
+          "$EV dotyczy tylko cash game",
+          "Chip EV jest zawsze wyższe"
+        ],
+        "correctIndex": 1,
+        "explanation": "W turnieju żetony przelicza się na pieniądze przez ICM — stąd $EV."
+      }
+    ]
+  },
+  {
+    "id": "quiz-rfi",
+    "lessonId": "rfi",
+    "title": "Quiz: Otwarcia (RFI)",
+    "questions": [
+      {
+        "q": "Z której pozycji otwierasz najszerzej (poza blindami)?",
+        "options": [
+          "UTG",
+          "MP",
+          "CO",
+          "BTN"
+        ],
+        "correctIndex": 3,
+        "explanation": "Button działa ostatni po flopie i ma tylko blindy za sobą."
+      },
+      {
+        "q": "Dlaczego 76s jest lepsze do otwarcia przy 80bb niż przy 12bb?",
+        "options": [
+          "Bo przy 12bb nie wolno grać suited",
+          "Bo głęboki stos daje implikowane szanse po flopie",
+          "Bo przy 80bb blindy są mniejsze",
+          "Nie ma różnicy"
+        ],
+        "correctIndex": 1,
+        "explanation": "Suited connectory zarabiają, trafiając strity/kolory w dużych pulach — to wymaga głębokich stosów."
+      },
+      {
+        "q": "Typowy rozmiar otwarcia w turnieju to:",
+        "options": [
+          "1bb",
+          "2–2,5bb",
+          "5bb",
+          "All-in"
+        ],
+        "correctIndex": 1,
+        "explanation": "W turniejach standardem są małe otwarcia 2–2,5bb."
+      }
+    ]
+  },
+  {
+    "id": "quiz-call-vs-shove",
+    "lessonId": "call-vs-shove",
+    "title": "Quiz: Call vs shove",
+    "questions": [
+      {
+        "q": "Od czego najbardziej zależy Twój zasięg calla na BB?",
+        "options": [
+          "Od Twoich ulubionych rąk",
+          "Od zasięgu shove przeciwnika (pozycja, stos)",
+          "Od pory dnia",
+          "Od koloru kart"
+        ],
+        "correctIndex": 1,
+        "explanation": "Sprawdzasz przeciwko jego zasięgowi — im szerszy, tym szerzej możesz sprawdzać."
+      },
+      {
+        "q": "Co to jest risk premium w ICM?",
+        "options": [
+          "Opłata za turniej",
+          "Dodatkowe equity potrzebne ponad chip EV z powodu ICM",
+          "Bonus za eliminację",
+          "Rake"
+        ],
+        "correctIndex": 1,
+        "explanation": "ICM podnosi próg equity do calla, bo przegrana kosztuje więcej, niż daje wygrana."
+      },
+      {
+        "q": "Shover z BTN ma 6bb, Ty na BB masz 40bb. Jak to wpływa na call?",
+        "options": [
+          "Sprawdzasz bardzo szeroko — ryzykujesz mało, a zasięg shovera jest szeroki",
+          "Pasujesz wszystko",
+          "Sprawdzasz tylko AA",
+          "Nie ma wpływu"
+        ],
+        "correctIndex": 0,
+        "explanation": "Mała kwota do sprawdzenia i szeroki zasięg przeciwnika = szeroki call."
+      }
+    ]
+  },
+  {
+    "id": "quiz-fold-equity-strefy",
+    "lessonId": "fold-equity-strefy",
+    "title": "Quiz: Fold equity i strefy stosu",
+    "questions": [
+      {
+        "q": "Przy którym stosie fold equity jest najmniejsza?",
+        "options": [
+          "25bb",
+          "15bb",
+          "10bb",
+          "3bb"
+        ],
+        "correctIndex": 3,
+        "explanation": "All-in za 3bb niemal nikogo nie zmusza do pasa — dostaniesz call."
+      },
+      {
+        "q": "Masz 6bb na UTG z K9o. Co jest zwykle lepsze niż czekanie na premium rękę?",
+        "options": [
+          "Limp",
+          "Szukanie pierwszego rozsądnego spotu na all-in",
+          "Pas do końca orbity",
+          "Min-raise i pas"
+        ],
+        "correctIndex": 1,
+        "explanation": "Przy krótkim stosie czekanie kosztuje blindy i ante, a fold equity znika."
+      },
+      {
+        "q": "Dlaczego 8–12bb to idealna strefa push/fold?",
+        "options": [
+          "Bo wtedy nie wolno grać inaczej",
+          "Bo jest jeszcze fold equity, ale nie stać Cię na raise/fold",
+          "Bo blindy wtedy maleją",
+          "Bo przeciwnicy zawsze pasują"
+        ],
+        "correctIndex": 1,
+        "explanation": "Open-raise i pas na 3-bet za dużo kosztuje — all-in daje maksimum fold equity."
+      }
+    ]
+  },
+  {
+    "id": "quiz-threebet-resteal",
+    "lessonId": "threebet-resteal",
+    "title": "Quiz: 3-bet shove i resteal",
+    "questions": [
+      {
+        "q": "Resteal to:",
+        "options": [
+          "Kradzież blindów z buttona",
+          "All-in z blindów nad otwarciem z późnej pozycji",
+          "Limp z SB",
+          "Call otwarcia"
+        ],
+        "correctIndex": 1,
+        "explanation": "Odpowiadasz all-inem na próbę kradzieży — zgarniając otwarcie i blindy."
+      },
+      {
+        "q": "Przeciwko któremu otwarciu 3-bet shove może być najszerszy?",
+        "options": [
+          "UTG",
+          "MP",
+          "BTN",
+          "Nie ma różnicy"
+        ],
+        "correctIndex": 2,
+        "explanation": "Button otwiera najszerzej, więc najczęściej musi spasować na Twój all-in."
+      },
+      {
+        "q": "Najlepszy zakres stosów do resteal to:",
+        "options": [
+          "3–6bb",
+          "12–25bb",
+          "50–100bb",
+          "Każdy"
+        ],
+        "correctIndex": 1,
+        "explanation": "Dość, żeby przeciwnik musiał pasować większość zasięgu, a za mało na 3-bet/fold."
+      }
+    ]
+  },
+  {
+    "id": "quiz-squeeze-multiway",
+    "lessonId": "squeeze-multiway",
+    "title": "Quiz: Squeeze i multiway",
+    "questions": [
+      {
+        "q": "Dlaczego gracz, który tylko sprawdził otwarcie, ma zwykle „ograniczony” zasięg?",
+        "options": [
+          "Bo jest początkujący",
+          "Bo z najsilniejszymi rękami zwykle by 3-betował",
+          "Bo ma mało żetonów",
+          "Bo zawsze blefuje"
+        ],
+        "correctIndex": 1,
+        "explanation": "AA/KK/AK zwykle podbija — call oznacza ręki średnie."
+      },
+      {
+        "q": "Jeden gracz all-in, drugi go sprawdził, Ty na BB z AJo. Co jest zwykle prawdą?",
+        "options": [
+          "Overcall jest automatyczny",
+          "Potrzebujesz bardzo silnej ręki — grasz przeciw dwóm zasięgom, a pas daje szansę na eliminację",
+          "Zawsze pasujesz AA",
+          "Musisz sprawdzić, bo pula jest duża"
+        ],
+        "correctIndex": 1,
+        "explanation": "Overcall wymaga dużej siły; w ICM pas jest tu często bardzo cenny."
+      },
+      {
+        "q": "Co w squeeze daje dodatkowe pieniądze w puli?",
+        "options": [
+          "Tylko blindy",
+          "Blindy, ante, otwarcie i call",
+          "Rake",
+          "Nic"
+        ],
+        "correctIndex": 1,
+        "explanation": "Martwe pieniądze z dwóch graczy powiększają nagrodę za udany squeeze."
+      }
+    ]
+  },
+  {
+    "id": "quiz-heads-up",
+    "lessonId": "heads-up",
+    "title": "Quiz: Heads-up",
+    "questions": [
+      {
+        "q": "Kto jest buttonem na heads-upie?",
+        "options": [
+          "Big blind",
+          "Small blind",
+          "Nikt",
+          "Losowo"
+        ],
+        "correctIndex": 1,
+        "explanation": "W HU small blind jest jednocześnie buttonem."
+      },
+      {
+        "q": "Zasięg shove w HU przy 10bb jest:",
+        "options": [
+          "Bardzo wąski (5%)",
+          "Bardzo szeroki (60–75%)",
+          "Taki sam jak z UTG",
+          "Zawsze 100%"
+        ],
+        "correctIndex": 1,
+        "explanation": "Jeden przeciwnik i szybkie blindy = bardzo szerokie zasięgi."
+      },
+      {
+        "q": "Dlaczego na heads-upie ICM praktycznie znika?",
+        "options": [
+          "Bo jest tylko jeden pay jump (1. vs 2. miejsce)",
+          "Bo nie ma już blindów",
+          "Bo żetony tracą wartość",
+          "Bo tak mówi regulamin"
+        ],
+        "correctIndex": 0,
+        "explanation": "Z jednym pay jumpem wartość żetonów jest prawie liniowa."
+      }
+    ]
+  },
+  {
+    "id": "quiz-satelity",
+    "lessonId": "satelity",
+    "title": "Quiz: Satelity",
+    "questions": [
+      {
+        "q": "Czym satelita różni się od zwykłego MTT?",
+        "options": [
+          "Ma więcej graczy",
+          "Wszystkie płatne miejsca są warte tyle samo",
+          "Nie ma blindów",
+          "Gra się bez ICM"
+        ],
+        "correctIndex": 1,
+        "explanation": "Każdy bilet ma tę samą wartość — 1. miejsce nie daje więcej."
+      },
+      {
+        "q": "Masz bardzo duży stos na bąbelku satelity i dostajesz all-in krótkiego stosu. Z AA:",
+        "options": [
+          "Zawsze sprawdzasz",
+          "Często pasujesz — bilet jest prawie pewny, a ryzyko nic nie daje",
+          "Przebijasz",
+          "Zależy od koloru"
+        ],
+        "correctIndex": 1,
+        "explanation": "Żetony ponad bezpieczny stos są niemal bezwartościowe."
+      },
+      {
+        "q": "Najczęstszy błąd w satelitach to:",
+        "options": [
+          "Za ciasna gra",
+          "Gra „jak w MTT” zamiast skrajnej ostrożności przy bezpiecznym stosie",
+          "Za mało stołów",
+          "Granie suited"
+        ],
+        "correctIndex": 1,
+        "explanation": "Struktura wypłat satelity wymaga zupełnie innej strategii."
+      }
+    ]
+  },
+  {
+    "id": "quiz-pko",
+    "lessonId": "pko",
+    "title": "Quiz: PKO i bounty",
+    "questions": [
+      {
+        "q": "W PKO eliminujesz gracza z bounty 40 $. Ile dostajesz od razu?",
+        "options": [
+          "0 $",
+          "20 $",
+          "40 $",
+          "80 $"
+        ],
+        "correctIndex": 1,
+        "explanation": "Połowa bounty trafia do Ciebie, druga połowa na Twoją głowę."
+      },
+      {
+        "q": "Jak bounty wpływa na wymagane equity do calla?",
+        "options": [
+          "Podnosi je",
+          "Obniża je",
+          "Nie wpływa",
+          "Zależy od pozycji"
+        ],
+        "correctIndex": 1,
+        "explanation": "Bounty to dodatkowa nagroda w puli — wystarcza mniej equity."
+      },
+      {
+        "q": "Kiedy NIE możesz zdobyć bounty przeciwnika?",
+        "options": [
+          "Gdy masz mniej żetonów niż on",
+          "Gdy masz więcej żetonów",
+          "Na final table",
+          "W HU"
+        ],
+        "correctIndex": 0,
+        "explanation": "Żeby kogoś wyeliminować, musisz go pokrywać."
+      }
+    ]
+  },
+  {
+    "id": "quiz-eksploatacja",
+    "lessonId": "eksploatacja",
+    "title": "Quiz: Eksploatacja",
+    "questions": [
+      {
+        "q": "Przeciwnik to nit (bardzo ciasny). Jego all-in sprawdzasz:",
+        "options": [
+          "Szerzej niż standard",
+          "Węziej niż standard",
+          "Tak samo",
+          "Zawsze"
+        ],
+        "correctIndex": 1,
+        "explanation": "Nit idzie all-in z silnym zasięgiem — potrzebujesz mocniejszej ręki."
+      },
+      {
+        "q": "Przeciwko maniakowi kradniesz blindy:",
+        "options": [
+          "Częściej",
+          "Rzadziej — częściej dostaniesz odpowiedź",
+          "Tak samo",
+          "Nigdy"
+        ],
+        "correctIndex": 1,
+        "explanation": "Maniak często odpowiada na kradzież — mniej fold equity."
+      },
+      {
+        "q": "Czym jest GTO?",
+        "options": [
+          "Strategia maksymalnie eksploatująca",
+          "Zbalansowana strategia, której nie da się wyeksploatować",
+          "Program do HUD",
+          "Rodzaj turnieju"
+        ],
+        "correctIndex": 1,
+        "explanation": "GTO nie przegrywa z nikim, ale też nie wykorzystuje słabości rywali."
+      }
+    ]
+  },
+  {
+    "id": "quiz-analiza-rozdan",
+    "lessonId": "analiza-rozdan",
+    "title": "Quiz: Analiza rozdań",
+    "questions": [
+      {
+        "q": "Co warto przeglądać najpierw po sesji?",
+        "options": [
+          "Wszystkie ręce po kolei",
+          "Ręce oznaczone jako niezgodne z modelem i największe pule",
+          "Tylko wygrane ręce",
+          "Nic — wyniki mówią same za siebie"
+        ],
+        "correctIndex": 1,
+        "explanation": "Skup się na rękach, gdzie najprawdopodobniej popełniłeś drogi błąd."
+      },
+      {
+        "q": "VPIP mierzy:",
+        "options": [
+          "Jak często dobrowolnie wkładasz żetony przed flopem",
+          "Jak często wygrywasz showdown",
+          "Średni stos",
+          "Liczbę stołów"
+        ],
+        "correctIndex": 0,
+        "explanation": "VPIP = % rąk, w których dobrowolnie zagrałeś preflop."
+      },
+      {
+        "q": "Przegrałeś all-in z AA vs KK. W analizie to jest:",
+        "options": [
+          "Błąd — trzeba było spasować",
+          "Poprawna decyzja, nie ma czego analizować",
+          "Leak",
+          "Tilt"
+        ],
+        "correctIndex": 1,
+        "explanation": "Analizuj decyzje, nie wyniki."
+      }
+    ]
+  },
+  {
+    "id": "quiz-bankroll",
+    "lessonId": "bankroll",
+    "title": "Quiz: Bankroll",
+    "questions": [
+      {
+        "q": "Orientacyjny bankroll na MTT to:",
+        "options": [
+          "5 wpisowych",
+          "20 wpisowych",
+          "100–200 średnich wpisowych",
+          "1 wpisowe"
+        ],
+        "correctIndex": 2,
+        "explanation": "Wariancja w MTT jest ogromna — potrzebny jest duży zapas."
+      },
+      {
+        "q": "ROI = ?",
+        "options": [
+          "Wygrane / liczba turniejów",
+          "(Wygrane − wpisowe) / wpisowe",
+          "Wpisowe − wygrane",
+          "Liczba ITM / turnieje"
+        ],
+        "correctIndex": 1,
+        "explanation": "ROI to zysk w relacji do zainwestowanych wpisowych."
+      },
+      {
+        "q": "Po 50 turniejach masz ROI −30%. Co to znaczy?",
+        "options": [
+          "Na pewno przegrywasz",
+          "Za mało danych — wariancja w MTT jest ogromna",
+          "Na pewno wygrywasz",
+          "Trzeba podnieść limit"
+        ],
+        "correctIndex": 1,
+        "explanation": "Wiarygodne ROI wymaga setek turniejów."
+      }
+    ]
+  },
+  {
+    "id": "quiz-tilt",
+    "lessonId": "tilt",
+    "title": "Quiz: Tilt",
+    "questions": [
+      {
+        "q": "Typowy objaw tiltu to:",
+        "options": [
+          "Gra ciaśniejsza niż zwykle",
+          "Luźniejsze calle i „odgrywanie się”",
+          "Dłuższe przerwy",
+          "Robienie notatek"
+        ],
+        "correctIndex": 1,
+        "explanation": "Emocje popychają do szybkich, luźnych decyzji."
+      },
+      {
+        "q": "Po 3 błędach z rzędu najlepiej:",
+        "options": [
+          "Dodać stół",
+          "Zrobić krótką przerwę",
+          "Podnieść stawki",
+          "Grać szybciej"
+        ],
+        "correctIndex": 1,
+        "explanation": "Krótka przerwa przerywa spiralę błędów."
+      },
+      {
+        "q": "Dlaczego tilt jest groźniejszy przy multi-tablingu?",
+        "options": [
+          "Nie jest",
+          "Bo jedna emocjonalna minuta to błędy na kilku stołach naraz",
+          "Bo stoły są mniejsze",
+          "Bo blindy rosną"
+        ],
+        "correctIndex": 1,
+        "explanation": "Każdy stół mnoży koszt złego stanu."
+      }
+    ]
+  },
+  {
+    "id": "quiz-rutyna",
+    "lessonId": "rutyna",
+    "title": "Quiz: Rutyna sesji",
+    "questions": [
+      {
+        "q": "Dobra rozgrzewka przed sesją to np.:",
+        "options": [
+          "Od razu 3 stoły",
+          "10 minut trenera albo powtórki błędów",
+          "Oglądanie powtórek bad beatów",
+          "Brak przygotowania"
+        ],
+        "correctIndex": 1,
+        "explanation": "Rozgrzewka przypomina zasięgi i ustawia tempo decyzji."
+      },
+      {
+        "q": "Kiedy analizować trudne ręce?",
+        "options": [
+          "W trakcie gry",
+          "Po sesji",
+          "Nigdy",
+          "Tylko gdy przegram"
+        ],
+        "correctIndex": 1,
+        "explanation": "W trakcie notuj krótko, analizuj po sesji na spokojnie."
+      },
+      {
+        "q": "Co warto ustalić przed startem sesji?",
+        "options": [
+          "Liczbę turniejów i godzinę końca",
+          "Tylko kolor karty",
+          "Nic",
+          "Wynik sesji"
+        ],
+        "correctIndex": 0,
+        "explanation": "Ramy sesji chronią przed graniem zmęczonym i na tilcie."
+      }
+    ]
+  },
+  {
+    "id": "quiz-plan-rozwoju",
+    "lessonId": "plan-rozwoju",
+    "title": "Quiz: Plan rozwoju",
+    "questions": [
+      {
+        "q": "Ile leaków najlepiej naprawiać naraz?",
+        "options": [
+          "Wszystkie",
+          "1–2",
+          "10",
+          "Żaden"
+        ],
+        "correctIndex": 1,
+        "explanation": "Skupienie na 1–2 problemach daje mierzalny postęp."
+      },
+      {
+        "q": "Leak: „za luźny call vs shove z BB przy 11–15bb”. Dobre ćwiczenie to:",
+        "options": [
+          "50 spotów call vs shove z BB przy 11–15bb w trenerze",
+          "Granie większej liczby stołów",
+          "Czytanie o kolorach",
+          "Nic"
+        ],
+        "correctIndex": 0,
+        "explanation": "Ustaw filtry trenera dokładnie na problematyczny spot."
+      },
+      {
+        "q": "Jak sprawdzić, czy leak zniknął?",
+        "options": [
+          "Na wyczucie",
+          "Tą samą miarą: trafność w tej samej komórce raportu",
+          "Po wyniku jednego turnieju",
+          "Pytając znajomych"
+        ],
+        "correctIndex": 1,
+        "explanation": "Mierz postęp tą samą metryką, która pokazała problem."
+      }
+    ]
+  },
+  {
+    "id": "quiz-icm-zaawansowany",
+    "lessonId": "icm-zaawansowany",
+    "title": "Quiz: Zaawansowany ICM",
+    "questions": [
+      {
+        "q": "Między jakimi stosami risk premium jest zwykle największe?",
+        "options": [
+          "Duży vs krótki",
+          "Średni vs średni",
+          "Krótki vs krótki",
+          "Zawsze takie samo"
+        ],
+        "correctIndex": 1,
+        "explanation": "Dwa średnie stosy mają najwięcej do stracenia w bezpośrednim starciu."
+      },
+      {
+        "q": "Kto może najmocniej naciskać na średnie stosy na bąbelku?",
+        "options": [
+          "Najkrótszy stos",
+          "Lider (duży stos)",
+          "Nikt",
+          "Gracz na BB"
+        ],
+        "correctIndex": 1,
+        "explanation": "Lider ma najmniejsze risk premium wobec średnich stosów."
+      },
+      {
+        "q": "Przy stole jest bardzo krótki stos (2bb). Dwa średnie stosy powinny:",
+        "options": [
+          "Walczyć między sobą częściej",
+          "Unikać marginalnych starć — krótki stos może zaraz odpaść",
+          "Grać all-in co rękę",
+          "Pasować wszystko"
+        ],
+        "correctIndex": 1,
+        "explanation": "Odpadnięcie krótkiego stosu podnosi ICM średnich stosów bez ryzyka."
       }
     ]
   }

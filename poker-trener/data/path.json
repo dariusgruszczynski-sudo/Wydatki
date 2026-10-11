@@ -1,0 +1,85 @@
+[
+  {
+    "stage": 1,
+    "name": "Nowicjusz",
+    "icon": "🐟",
+    "desc": "Zasady, układy, pozycje i ręce startowe.",
+    "drills": [
+      "hand_compare",
+      "hand_name",
+      "action_order"
+    ],
+    "spotTypes": []
+  },
+  {
+    "stage": 2,
+    "name": "Amator",
+    "icon": "🎲",
+    "desc": "Matematyka pokera: pot odds, outy, EV, odczyt boardu.",
+    "drills": [
+      "pot_odds",
+      "outs",
+      "board_nuts"
+    ],
+    "spotTypes": []
+  },
+  {
+    "stage": 3,
+    "name": "Regular",
+    "icon": "🎯",
+    "desc": "Krótki stos: push/fold, call vs shove, ICM, otwarcia.",
+    "drills": [],
+    "spotTypes": [
+      "open_shove",
+      "facing_shove",
+      "rfi"
+    ]
+  },
+  {
+    "stage": 4,
+    "name": "Grinder",
+    "icon": "⚔️",
+    "desc": "Presja turniejowa: bąbelek, final table, 3-bet shove, squeeze.",
+    "drills": [],
+    "spotTypes": [
+      "threebet_shove",
+      "resteal",
+      "squeeze",
+      "three_way"
+    ]
+  },
+  {
+    "stage": 5,
+    "name": "Pro",
+    "icon": "💼",
+    "desc": "Satelity, PKO, eksploatacja, analiza rąk, bankroll.",
+    "drills": [],
+    "spotTypes": [
+      "open_shove",
+      "facing_shove",
+      "threebet_shove",
+      "resteal"
+    ],
+    "formats": [
+      "satellite",
+      "pko"
+    ],
+    "mode": "exploit"
+  },
+  {
+    "stage": 6,
+    "name": "Mistrz",
+    "icon": "👑",
+    "desc": "Multi-tabling, mental game, zaawansowany ICM.",
+    "drills": [],
+    "spotTypes": [
+      "open_shove",
+      "facing_shove",
+      "threebet_shove",
+      "resteal",
+      "squeeze",
+      "three_way"
+    ],
+    "speedMs": 8000
+  }
+]

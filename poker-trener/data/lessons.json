@@ -1,5 +1,45 @@
 [
   {
+    "id": "zasady",
+    "title": "Zasady i przebieg rozdania",
+    "summary": "Od rozdania kart do showdownu — szkielet każdej ręki Texas Hold'em.",
+    "illustration": "hand-flow",
+    "keyPoints": [
+      "Każdy gracz dostaje 2 zakryte karty, na stół trafia 5 wspólnych: flop (3), turn (1), river (1).",
+      "Są 4 rundy licytacji: preflop, flop, turn, river.",
+      "Możliwe akcje: pas (fold), czekanie (check), sprawdzenie (call), zakład (bet), podbicie (raise).",
+      "Wygrywa najlepszy układ 5 kart z 7 dostępnych — albo gracz, przy którym wszyscy spasowali.",
+      "W turnieju nie wymieniasz żetonów na pieniądze — grasz, aż ktoś zbierze wszystkie."
+    ],
+    "body": [
+      "Rozdanie zaczyna się od wpłat wymuszonych: small blind (SB) i big blind (BB), a często także ante. Dzięki nim w puli zawsze jest coś do wygrania i nikt nie może czekać w nieskończoność na asy.",
+      "Przed flopem akcję zaczyna gracz po lewej od big blinda. Po flopie — pierwszy aktywny gracz po lewej od buttona. Gracz na buttonie działa więc ostatni na każdej ulicy po flopie, co daje mu przewagę informacyjną.",
+      "Jeśli po ostatniej licytacji zostało co najmniej dwóch graczy, dochodzi do showdownu: odkrywacie karty i najlepsza piątka zgarnia pulę. Remis dzieli pulę po równo."
+    ],
+    "stage": 1,
+    "order": 1
+  },
+  {
+    "id": "uklady",
+    "title": "Układy kart",
+    "summary": "Hierarchia układów i kickery — bez tego nie da się czytać boardu.",
+    "illustration": "hand-rankings",
+    "keyPoints": [
+      "Od najsłabszego: wysoka karta, para, dwie pary, trójka, strit, kolor, full, kareta, poker, poker królewski.",
+      "Liczy się zawsze najlepsza piątka z 7 kart (2 Twoje + 5 wspólnych).",
+      "Przy tej samej kategorii decydują wyższe karty, a potem kickery.",
+      "As może być najniższą kartą w stricie A-2-3-4-5 (tzw. wheel).",
+      "Kolor nie ma starszeństwa — kier nie bije pika."
+    ],
+    "body": [
+      "Najczęstszy błąd początkujących to przecenianie „ładnych” rąk. Para asów jest bardzo silna przed flopem, ale na boardzie z czterema kartami w kolorze może być już tylko trzecią najlepszą ręką.",
+      "Kicker to najwyższa karta, która nie tworzy układu, a rozstrzyga remis. A-K i A-Q na flopie A-7-2 mają tę samą parę asów — wygrywa ten z lepszym kickerem (K).",
+      "Ćwiczenie „Który układ jest silniejszy?” i „Nazwij układ” w module podstaw buduje odruch, który przy kilku stołach naraz musi działać bez zastanowienia."
+    ],
+    "stage": 1,
+    "order": 2
+  },
+  {
     "id": "pozycje",
     "title": "Pozycja przy stole",
     "summary": "Dlaczego ta sama karta jest grywalna z guzika, a folderem z UTG.",
@@ -14,7 +54,50 @@
       "W Texas Hold'em każda runda licytacji po preflopie zaczyna się od gracza najbliżej po lewej od dealera. Gracz na guziku (BTN) działa jako ostatni na każdej kolejnej ulicy — widzi wszystkie decyzje przeciwników przed swoją. To ogromna przewaga informacyjna.",
       "W turniejach, gdzie stosy się spłaszczają i liczy się ICM, pozycja nabiera jeszcze większego znaczenia — błąd pozycyjny (np. open-raise z UTG szerokim zasięgiem) kosztuje więcej, bo nie masz jak się z niego wycofać bez strat.",
       "Dla treningu push/fold: zasięgi przesunięcia (shove) rozszerzają się w kolejności UTG < MP < CO < SB, właśnie dlatego, że z każdą kolejną pozycją jest mniej graczy, którzy mogą jeszcze zareagować."
-    ]
+    ],
+    "illustration": "table-positions",
+    "stage": 1,
+    "order": 3
+  },
+  {
+    "id": "blindy-struktura",
+    "title": "Blindy, ante i struktura turnieju",
+    "summary": "Dlaczego stos w bb jest ważniejszy niż liczba żetonów.",
+    "illustration": "blinds-structure",
+    "keyPoints": [
+      "Blindy rosną co poziom — Twój stos maleje względem nich, nawet jeśli nie tracisz żetonów.",
+      "Licz stos w big blindach (bb), nie w żetonach: 3000 żetonów przy blindach 100/200 to 15bb.",
+      "BB ante (cały stół płaci ante przez big blinda) jest dziś standardem — powiększa pulę i zachęca do walki o blindy.",
+      "Im większa pula na starcie rozdania, tym bardziej opłaca się ją kraść.",
+      "Struktura (szybkość wzrostu blindów) decyduje, jak szybko przechodzisz do gry push/fold."
+    ],
+    "body": [
+      "W typowym turnieju online startujesz z 50–100bb. Po kilku poziomach średni stos to już 20–30bb, a duża część pola gra krótkimi stosami. Dlatego strategia krótkiego stosu jest tak ważna.",
+      "Ante sprawia, że w puli przed rozdaniem leży ok. 2,5bb zamiast 1,5bb. To o 60% więcej do zgarnięcia za udaną kradzież — zasięgi otwarć i all-inów stają się szersze.",
+      "W trenerze możesz przełączać tryb ante (brak / BB ante / klasyczne) i w funkcji „Co jeśli” zobaczyć, jak ta sama decyzja zmienia się w zależności od ante."
+    ],
+    "stage": 1,
+    "order": 4
+  },
+  {
+    "id": "reka-startowa",
+    "title": "Selekcja rąk startowych",
+    "summary": "Jakie ręce grać, żeby nie przepalać żetonów przed flopem.",
+    "illustration": "starting-hands-grid",
+    "keyPoints": [
+      "Jest 169 typów rąk startowych: 13 par, 78 suited i 78 offsuit.",
+      "Pary to 6 kombinacji, ręce suited 4, offsuit 12 — dlatego offsuit „zajmuje” więcej zasięgu.",
+      "Suited i połączone karty (np. 87s) grają lepiej po flopie niż ręce rozrzucone (np. K4o).",
+      "Słabe asy offsuit (A2o–A8o) często wpadają w pułapkę dominacji przez lepsze asy.",
+      "Zasięg otwarcia rośnie z każdą pozycją bliżej buttona."
+    ],
+    "body": [
+      "Siatka 13×13 to standardowy sposób pokazywania zasięgów: na przekątnej pary, nad nią ręce suited, pod nią offsuit. W apce zobaczysz ją po każdej decyzji — z zaznaczonym zasięgiem przeciwnika.",
+      "Dominacja to sytuacja, w której Twoja ręka dzieli kartę z lepszą ręką przeciwnika (np. A7 vs AK). Gdy trafisz asa, i tak przegrywasz z lepszym kickerem. Dlatego ręce typu KJo czy A9o są dużo słabsze z wczesnej pozycji niż z buttona.",
+      "Trener „Otwarcie (deep)” uczy, które ręce otwierać z każdej pozycji przy głębokich stosach."
+    ],
+    "stage": 1,
+    "order": 5
   },
   {
     "id": "pot-odds-equity",
@@ -30,7 +113,106 @@
       "Pot odds liczysz tak: kwota_do_wpłacenia / (pula_po_Twoim_callu). Jeśli musisz dopłacić 100 do puli, która po callu będzie miała 400, to potrzebujesz 25% equity, żeby call się opłacał długoterminowo.",
       "W treningu push/fold równowartością 'pot odds' jest porównanie EV(call) i EV(fold) liczone już nie w czipach, a w ICM — bo w turnieju ważniejsze jest, ile wart jest Twój stos w kontekście struktury wypłat, nie sama ilość żetonów.",
       "Reguła kciuka: licząc outsy po flopie, przybliżasz equity jako outsy×4 (do river z dwoma kartami do dojścia) albo outsy×2 (tylko do jednej następnej karty)."
-    ]
+    ],
+    "illustration": "pot-odds-bar",
+    "stage": 2,
+    "order": 1
+  },
+  {
+    "id": "outy",
+    "title": "Outy i reguła 4 i 2",
+    "summary": "Szybkie liczenie szans na poprawienie ręki.",
+    "illustration": "outs",
+    "keyPoints": [
+      "Out to karta, która daje Ci rękę lepszą od przeciwnika.",
+      "Flush draw = 9 outów, open-ended straight draw = 8, gutshot = 4, dwie overcardy ≈ 6.",
+      "Reguła 4: na flopie (2 karty do przyjścia) outy × 4 ≈ % szans. Reguła 2: na turnie outy × 2.",
+      "Przy więcej niż 8 outach reguła 4 przeszacowuje — odejmij (outy − 8).",
+      "„Brudne” outy dają Ci układ, ale nadal przegrywasz (np. kolor, gdy przeciwnik ma lepszy kolor)."
+    ],
+    "body": [
+      "Licząc outy, pytasz: które karty z talii odwracają wynik? Jeśli masz 8♥7♥ na flopie K♥5♥2♣ przeciwko parze królów, masz 9 kierów (kolor) — ale K♥ czy 5♥ mogą dać przeciwnikowi trójkę lub dwie pary, więc część outów jest brudna.",
+      "Dokładne equity do rivera liczy się przez przejrzenie wszystkich 990 kombinacji turn+river. Ćwiczenie „Liczenie outów” robi to za Ciebie i pokazuje, jak blisko była reguła 4.",
+      "Przy kilku stołach naraz nie ma czasu na dokładne liczenie — reguła 4 i 2 wystarcza w 95% decyzji."
+    ],
+    "stage": 2,
+    "order": 2
+  },
+  {
+    "id": "nuts-board",
+    "title": "Odczyt boardu i nuts",
+    "summary": "Co jest najlepszą możliwą ręką i co może mieć przeciwnik.",
+    "illustration": "board-texture",
+    "keyPoints": [
+      "Nuts to najlepsza możliwa ręka przy danym boardzie.",
+      "Para na boardzie umożliwia fulla i karetę; trzy karty w kolorze — kolor; trzy połączone — strita.",
+      "Boardy „suche” (K-7-2 rainbow) dają mało możliwości; „mokre” (J♥T♥9♣) — bardzo dużo.",
+      "Im mokrzejszy board, tym mniej warta jest jedna para.",
+      "Zawsze sprawdzaj, czy Twój układ nie jest „drugi najlepszy” na tym boardzie."
+    ],
+    "body": [
+      "Odczyt boardu to pierwszy krok czytania zasięgu przeciwnika: najpierw ustalasz, jakie silne ręce w ogóle są możliwe, potem — które z nich przeciwnik realnie mógł zagrać do tego momentu.",
+      "Ćwiczenie „Nuts na boardzie” pokazuje 5 kart wspólnych i 4 ręce do wyboru. Szukasz tej, która bije wszystkie inne możliwe kombinacje — to trenuje szybkie skanowanie boardu pod kątem stritów, kolorów i fulli."
+    ],
+    "stage": 2,
+    "order": 3
+  },
+  {
+    "id": "ev",
+    "title": "Expected Value (EV) w praktyce",
+    "summary": "Myślenie o decyzjach, a nie o wynikach pojedynczych rąk.",
+    "illustration": "ev-tree",
+    "keyPoints": [
+      "EV = suma (prawdopodobieństwo wyniku × wartość wyniku) po wszystkich możliwych wynikach.",
+      "Dobra decyzja to decyzja z najwyższym EV — nawet jeśli w tym konkretnym rozdaniu przegrałeś.",
+      "Chip EV liczy żetony; w turnieju ważniejsze jest $EV (ICM), czyli pieniądze.",
+      "Wariancja sprawia, że krótkoterminowe wyniki mało mówią o jakości gry.",
+      "Trener ocenia Twoje decyzje po EV, nie po tym, czy „wygrałeś rozdanie”."
+    ],
+    "body": [
+      "Przykład: shove za 10bb do puli 2,5bb. Przeciwnik pasuje w 60% (+2,5bb), w 40% sprawdza, a wtedy wygrywasz 35% razy (+12,5bb) i przegrywasz 65% (−10bb). EV = 0,6×2,5 + 0,4×(0,35×12,5 − 0,65×10) = 1,5 + 0,4×(−2,1) ≈ +0,66bb. Shove jest opłacalny, choć gdy dostaniesz call, częściej przegrywasz.",
+      "Właśnie dlatego apka pokazuje EV obu decyzji i różnicę między nimi. Myśl o każdej decyzji jak o jednej z tysięcy identycznych — liczy się średni wynik.",
+      "Drzewo EV na ilustracji pokazuje rozgałęzienia: pas przeciwnika, call i wygrana, call i przegrana."
+    ],
+    "stage": 2,
+    "order": 4
+  },
+  {
+    "id": "zasiegi-przeciwnika",
+    "title": "Czytanie zasięgu przeciwnika",
+    "summary": "Myślenie w kategoriach 'co może mieć' zamiast 'co ja mam'.",
+    "keyPoints": [
+      "Zasięg = zbiór wszystkich rąk, jakie przeciwnik mógłby zagrać w danej sytuacji.",
+      "Pozycja, rozmiar stosu i wcześniejsza akcja zawężają ten zbiór.",
+      "Dobra decyzja to taka, która jest +EV na całym zasięgu przeciwnika, nie tylko na konkretnej karcie, którą 'czujesz'.",
+      "W tej apce zasięgi są uproszczonym % najlepszych kombinacji — nie pełnym, ważonym solverem."
+    ],
+    "body": [
+      "Zamiast zgadywać dwie konkretne karty przeciwnika, dobrzy gracze myślą w kategoriach pełnego zasięgu — np. 'z tego stosu, z tej pozycji, przeciwnik shove'uje jakieś 20% najlepszych rąk'.",
+      "W module ICM trenujesz właśnie to: Twoja decyzja jest sprawdzana przeciwko całemu przypisanemu zasięgowi przeciwnika (symulacja Monte Carlo), a nie jednej losowej karcie."
+    ],
+    "illustration": "range-grid",
+    "stage": 2,
+    "order": 5
+  },
+  {
+    "id": "push-fold",
+    "title": "Push/fold — kiedy i dlaczego",
+    "summary": "Gra bez możliwości late-street decyzji, czyli matematyka zamiast czytania przeciwnika.",
+    "keyPoints": [
+      "Poniżej ~20bb efektywnego stosu gra post-flopowa traci sens — decyzja all-in-lub-fold jest prostsza i mniej błędogenna.",
+      "Zasięg push zależy od: pozycji, efektywnego stosu i tego, kto jeszcze może Cię zacallować.",
+      "Zasięg call vs shove zależy od: zasięgu przeciwnika (jego pozycji i stosu) oraz Twojego ICM-ryzyka.",
+      "Fold equity (szansa, że przeciwnik spasuje) jest częścią EV shove'a — czasem shove jest +EV nawet ze słabą ręką."
+    ],
+    "body": [
+      "Push/fold to uproszczony, ale matematycznie bardzo precyzyjny sposób gry krótkimi stosami. Zamiast liczyć wielopoziomowe linie na kilku ulicach, liczysz jedną decyzję: cały stos albo pas.",
+      "Siła zasięgu push zależy głównie od tego, ile 'miejsca' masz przed sobą — im bliżej guzika, tym mniej graczy może Cię jeszcze zacallować, więc zasięg rośnie.",
+      "W tej aplikacji trenujesz dwa klasyczne scenariusze: (1) Ty open-shove'ujesz, a big blind decyduje, czy Cię zacallować; (2) przeciwnik shove'uje, a Ty (na big blindzie) decydujesz call czy fold."
+    ],
+    "illustration": "push-fold-chart",
+    "stage": 3,
+    "order": 1
   },
   {
     "id": "icm-podstawy",
@@ -47,23 +229,68 @@
       "Klasyczny efekt ICM: duży stos nie powinien ryzykować całego stosu w marginalnej sytuacji przeciwko krótkiemu stosowi na bąbelku — bo nawet jeśli wygra, 'kupuje' względnie mało dodatkowej wartości $, a jeśli przegra, traci bardzo dużo (traci szansę na 1. miejsce).",
       "Z kolei krótki stos na bąbelku często MUSI grać agresywniej niż 'czysto matematycznie' wskazywałyby czipy, bo i tak jest blisko eliminacji — 'nie ma nic do stracenia' relatywnie do stawki, jaką jest awans do pieniędzy.",
       "Trener ICM w tej aplikacji liczy właśnie to: realną wartość $ Twojego stosu przed i po decyzji, przy zadanej strukturze wypłat i stosach wszystkich graczy."
-    ]
+    ],
+    "illustration": "icm-chips-vs-money",
+    "stage": 3,
+    "order": 2
   },
   {
-    "id": "push-fold",
-    "title": "Push/fold — kiedy i dlaczego",
-    "summary": "Gra bez możliwości late-street decyzji, czyli matematyka zamiast czytania przeciwnika.",
+    "id": "rfi",
+    "title": "Otwarcia przy głębokich stosach (RFI)",
+    "summary": "Raise first in: jakie ręce otwierać z każdej pozycji, mając 40–100bb.",
+    "illustration": "rfi-chart",
     "keyPoints": [
-      "Poniżej ~20bb efektywnego stosu gra post-flopowa traci sens — decyzja all-in-lub-fold jest prostsza i mniej błędogenna.",
-      "Zasięg push zależy od: pozycji, efektywnego stosu i tego, kto jeszcze może Cię zacallować.",
-      "Zasięg call vs shove zależy od: zasięgu przeciwnika (jego pozycji i stosu) oraz Twojego ICM-ryzyka.",
-      "Fold equity (szansa, że przeciwnik spasuje) jest częścią EV shove'a — czasem shove jest +EV nawet ze słabą ręką."
+      "RFI = pierwsze podbicie, gdy wszyscy przed Tobą spasowali.",
+      "Orientacyjnie (9-max): UTG ok. 12%, MP ok. 17%, HJ ok. 23%, CO ok. 28%, BTN ok. 43%, SB ok. 38%.",
+      "Przy głębokich stosach liczy się grywalność po flopie — suited connectory i małe pary zyskują.",
+      "Standardowy rozmiar otwarcia w turniejach: 2–2,5bb.",
+      "Ręce graniczne zależą od stołu: agresywni gracze za Tobą → pasuj, pasywni → otwieraj."
     ],
     "body": [
-      "Push/fold to uproszczony, ale matematycznie bardzo precyzyjny sposób gry krótkimi stosami. Zamiast liczyć wielopoziomowe linie na kilku ulicach, liczysz jedną decyzję: cały stos albo pas.",
-      "Siła zasięgu push zależy głównie od tego, ile 'miejsca' masz przed sobą — im bliżej guzika, tym mniej graczy może Cię jeszcze zacallować, więc zasięg rośnie.",
-      "W tej aplikacji trenujesz dwa klasyczne scenariusze: (1) Ty open-shove'ujesz, a big blind decyduje, czy Cię zacallować; (2) przeciwnik shove'uje, a Ty (na big blindzie) decydujesz call czy fold."
-    ]
+      "Głęboki stos daje miejsce na grę po flopie: implikowane szanse (możliwość wygrania dużej puli, gdy trafisz seta czy strita) sprawiają, że 65s czy 44 są warte otwarcia z późnych pozycji, choć all-in z nimi byłby słaby.",
+      "Trener „Otwarcie (deep)” używa osobnego rankingu grywalności rąk — innego niż ranking siły all-in. To dlatego np. 87s otwierasz z CO, ale z 12bb już niekoniecznie wpychasz go all-in.",
+      "Ręce oznaczone jako graniczne liczą się jako poprawne przy obu decyzjach — to ręce, które w zależności od dynamiki stołu bywają raise albo fold."
+    ],
+    "stage": 3,
+    "order": 3
+  },
+  {
+    "id": "call-vs-shove",
+    "title": "Call vs shove",
+    "summary": "Jak bronić big blinda, gdy ktoś idzie all-in.",
+    "illustration": "call-vs-shove",
+    "keyPoints": [
+      "Zasięg calla zależy od zasięgu shove przeciwnika, a ten od jego pozycji i stosu.",
+      "Krótki shover z późnej pozycji ma szeroki zasięg → możesz sprawdzać szerzej.",
+      "Pot odds na BB są dobre (już wpłaciłeś blinda i ante), ale ICM podnosi próg equity.",
+      "Pytanie kontrolne: ile equity potrzebuję i ile mam przeciwko jego zasięgowi?",
+      "Ryzyko eliminacji kosztuje więcej, niż daje podwojenie — szczególnie na bąbelku."
+    ],
+    "body": [
+      "Przy chip EV wystarcza proste porównanie pot odds z equity. W turnieju trzeba porównać wartość $ stosu po wygranej, po przegranej i po pasie. Apka liczy ten próg i pokazuje go po każdej decyzji „call vs shove” jako „potrzebne equity w ICM”.",
+      "Różnica między progiem ICM a progiem chip EV to tzw. risk premium — dodatkowe equity, którego potrzebujesz, bo przegrana boli bardziej, niż cieszy wygrana."
+    ],
+    "stage": 3,
+    "order": 4
+  },
+  {
+    "id": "fold-equity-strefy",
+    "title": "Fold equity i strefy stosu",
+    "summary": "Kiedy stos jest jeszcze groźny, a kiedy już nikt go nie spasuje.",
+    "illustration": "stack-zones",
+    "keyPoints": [
+      "Fold equity rośnie z wielkością Twojego stosu — 15bb all-in boli przeciwnika, 3bb nie.",
+      "Strefy orientacyjne: 25bb+ (gra normalna), 13–25bb (3-bet shove, resteal), 8–12bb (open shove), poniżej 7bb (szukaj pierwszego dobrego spotu).",
+      "Czekanie na premium ręce przy 6bb to błąd — blindy zjedzą stos, a fold equity zniknie.",
+      "M-ratio (stos / koszt orbity) to inny sposób mierzenia presji blindów.",
+      "Każdy pas przy krótkim stosie ma koszt: tracisz blindy i ante."
+    ],
+    "body": [
+      "Shove ma dwa źródła zysku: rozdania, w których wszyscy pasują, i rozdania, w których wygrywasz showdown. Im krótszy stos, tym mniej wart jest ten pierwszy element — dlatego przy 3–5bb grasz już niemal każdą sensowną ręką, bo i tak zostaniesz sprawdzony.",
+      "Najgroźniejsza strefa to 8–12bb: masz jeszcze fold equity, ale już nie stać Cię na open-raise i pas na 3-bet. To idealny zasięg dla czystego push/fold."
+    ],
+    "stage": 3,
+    "order": 5
   },
   {
     "id": "bubble",
@@ -78,7 +305,10 @@
     "body": [
       "Na bąbelku różnica między 'zostać bez pieniędzy' i 'wejść do ITM' jest z punktu widzenia ICM ogromna — często większa niż różnica między sąsiednimi miejscami w głębi wypłat.",
       "To sprawia, że krótkie i średnie stosy grają wyjątkowo ciasno — i to właśnie otwiera miejsce na presję od graczy z komfortowym stosem, którzy mogą sobie pozwolić na odpadnięcie bez katastrofalnych strat ICM."
-    ]
+    ],
+    "illustration": "bubble",
+    "stage": 4,
+    "order": 1
   },
   {
     "id": "final-table",
@@ -93,22 +323,162 @@
     "body": [
       "Struktury wypłat są z reguły bardzo 'top-heavy' — 1. miejsce bierze nieproporcjonalnie dużo względem miejsc niższych. To oznacza, że na final table walka o przetrwanie (przejście z 9. na 6. miejsce) jest często mniej warta ICM-owo niż się wydaje z perspektywy czipów, a walka o 1-2 miejsce jest warta bardzo dużo.",
       "Dlatego na final table klasyczny błąd to 'przeciążanie' średnich stosów w marginalnych confrontacjach, które niosą duże ryzyko ICM, a niewielką nagrodę w porównaniu z czekaniem na lepszy spot."
-    ]
+    ],
+    "illustration": "payout-pyramid",
+    "stage": 4,
+    "order": 2
   },
   {
-    "id": "zasiegi-przeciwnika",
-    "title": "Czytanie zasięgu przeciwnika",
-    "summary": "Myślenie w kategoriach 'co może mieć' zamiast 'co ja mam'.",
+    "id": "threebet-resteal",
+    "title": "3-bet shove i resteal",
+    "summary": "All-in nad otwarciem przeciwnika — jedna z najbardziej dochodowych broni przy 15–25bb.",
+    "illustration": "threebet",
     "keyPoints": [
-      "Zasięg = zbiór wszystkich rąk, jakie przeciwnik mógłby zagrać w danej sytuacji.",
-      "Pozycja, rozmiar stosu i wcześniejsza akcja zawężają ten zbiór.",
-      "Dobra decyzja to taka, która jest +EV na całym zasięgu przeciwnika, nie tylko na konkretnej karcie, którą 'czujesz'.",
-      "W tej apce zasięgi są uproszczonym % najlepszych kombinacji — nie pełnym, ważonym solverem."
+      "Resteal = all-in z blindów nad otwarciem z późnej pozycji (CO, BTN, SB).",
+      "Otwierający z szerokim zasięgiem musi spasować większość rąk na Twój all-in.",
+      "Do puli dochodzi jego otwarcie (ok. 2,2bb) — wygrywasz więcej bez walki niż przy open shove.",
+      "Najlepsze stosy do resteal: 12–25bb — dość, by zaboleć, za mało, by grać 3-bet/fold.",
+      "Im węższy zasięg otwarcia (UTG), tym węższy powinien być Twój 3-bet shove."
     ],
     "body": [
-      "Zamiast zgadywać dwie konkretne karty przeciwnika, dobrzy gracze myślą w kategoriach pełnego zasięgu — np. 'z tego stosu, z tej pozycji, przeciwnik shove'uje jakieś 20% najlepszych rąk'.",
-      "W module ICM trenujesz właśnie to: Twoja decyzja jest sprawdzana przeciwko całemu przypisanemu zasięgowi przeciwnika (symulacja Monte Carlo), a nie jednej losowej karcie."
-    ]
+      "Gracze z późnych pozycji kradną blindy bardzo szerokim zasięgiem. Gdy odpowiesz all-in za 18bb, większość tego zasięgu musi spasować. Każdy taki pas to ok. 4bb do Twojego stosu bez ryzyka.",
+      "W trenerze spot „Resteal” pokazuje, jak często przeciwnik sprawdza (fold equity) i jakie masz equity, gdy dostaniesz call. Zwróć uwagę, że często opłaca się resteal ręką, z którą nie sprawdziłbyś cudzego all-ina."
+    ],
+    "stage": 4,
+    "order": 3
+  },
+  {
+    "id": "squeeze-multiway",
+    "title": "Squeeze i all-in wieloosobowe",
+    "summary": "Otwarcie + call przed Tobą to okazja — ale overcall to pułapka.",
+    "illustration": "squeeze",
+    "keyPoints": [
+      "Squeeze = 3-bet (tu all-in) po otwarciu i callu innego gracza.",
+      "Gracz, który tylko sprawdził, ma zwykle zasięg ograniczony — bez najsilniejszych rąk.",
+      "W puli jest dużo martwych pieniędzy: blindy, ante, otwarcie i call.",
+      "Overcall all-ina, gdy ktoś już sprawdził, wymaga bardzo silnej ręki.",
+      "Gdy dwóch graczy gra all-in, a Ty pasujesz, jeden z nich może odpaść — w ICM to dla Ciebie zysk bez ryzyka."
+    ],
+    "body": [
+      "Squeeze działa, bo otwierający musi się bać także sprawdzającego, a sprawdzający pokazał, że nie ma ręki na 3-bet. Fold equity bywa zaskakująco wysoka.",
+      "Odwrotna sytuacja to all-in 3-way: jeden gracz jest all-in, drugi go sprawdził, a Ty decydujesz na BB. Tu dominuje ostrożność — grasz przeciwko dwóm zasięgom, a pas daje szansę, że ktoś odpadnie. Trener liczy to pełną symulacją z side potami."
+    ],
+    "stage": 4,
+    "order": 4
+  },
+  {
+    "id": "heads-up",
+    "title": "Heads-up i gra short-handed",
+    "summary": "Gdy przy stole zostaje 2–3 graczy, zasięgi eksplodują.",
+    "illustration": "heads-up",
+    "keyPoints": [
+      "Heads-up: SB jest jednocześnie buttonem i działa pierwszy przed flopem.",
+      "Zasięgi shove w HU są bardzo szerokie — przy 10bb ok. 60–75% rąk.",
+      "Wysoka karta i małe pary zyskują na wartości, bo przeciwnik rzadko ma coś dobrego.",
+      "Przy 3 graczach blindy chodzą bardzo szybko — każda orbita kosztuje dużo.",
+      "Na heads-upie w turnieju z wypłatami ICM znika (pozostaje tylko różnica 1. vs 2. miejsca)."
+    ],
+    "body": [
+      "Na heads-upie zwykle grasz chip EV: jest tylko jeden pay jump, więc każdy żeton ma niemal liniową wartość. To jedna z niewielu faz turnieju, gdzie decyzje są „czysto matematyczne”.",
+      "Trener pozwala wybrać etap „Heads-up” w filtrach, żeby przećwiczyć szerokie zasięgi bez zakłóceń ICM."
+    ],
+    "stage": 4,
+    "order": 5
+  },
+  {
+    "id": "satelity",
+    "title": "Satelity",
+    "summary": "Gdy wszystkie płatne miejsca są warte tyle samo, przetrwanie jest wszystkim.",
+    "illustration": "satellite",
+    "keyPoints": [
+      "W satelicie każdy zdobyty bilet ma tę samą wartość — 1. miejsce nie daje więcej niż ostatnie płatne.",
+      "Żetony ponad bezpieczny stos są warte prawie zero.",
+      "Duży stos na bąbelku satelity często pasuje nawet AA, jeśli i tak ma gwarantowany bilet.",
+      "Krótkie stosy muszą zbierać żetony — ale tylko do momentu, gdy są bezpieczne.",
+      "Najczęstszy błąd: gra „jak w MTT” zamiast skrajnie ciasno przy bezpiecznym stosie."
+    ],
+    "body": [
+      "Satelita to ekstremalny przypadek ICM. Wyobraź sobie 6 graczy i 5 biletów: jeśli masz 3× średni stos, praktycznie nie da się Ciebie wyeliminować przed końcem — każde ryzyko to tylko szansa na stratę biletu, bez żadnej nagrody.",
+      "Trener zawiera format „Satelita” z szablonami 3 i 5 biletów oraz double-up. Zobaczysz, jak drastycznie zawężają się zasięgi calla."
+    ],
+    "stage": 5,
+    "order": 1
+  },
+  {
+    "id": "pko",
+    "title": "PKO i bounty",
+    "summary": "Nagroda za eliminację zmienia matematykę calla.",
+    "illustration": "pko",
+    "keyPoints": [
+      "W PKO (progressive knockout) połowa bounty wyeliminowanego gracza trafia do Ciebie od razu, druga połowa — na Twoją głowę.",
+      "Bounty działa jak dodatkowe pieniądze w puli — obniża wymagane equity do calla.",
+      "Bounty możesz zdobyć tylko od gracza, którego pokrywasz (masz więcej żetonów).",
+      "Gracze z dużym bounty na głowie są celem — będą sprawdzani szerzej.",
+      "Pod koniec turnieju bounty są duże, ale ICM nadal działa — trzeba ważyć obie rzeczy."
+    ],
+    "body": [
+      "Jeśli przeciwnik z bounty 50 $ idzie all-in za 10bb, a Ty go pokrywasz, wygrana daje Ci jego żetony plus 25 $ gotówką. To może zamienić spas w call nawet z 30% equity.",
+      "W trenerze format PKO pokazuje bounty przy każdym graczu, a wyjaśnienie podaje, ile średnio bounty dodaje do EV agresji."
+    ],
+    "stage": 5,
+    "order": 2
+  },
+  {
+    "id": "eksploatacja",
+    "title": "Typy przeciwników i eksploatacja vs GTO",
+    "summary": "Kiedy odchodzić od strategii „podręcznikowej”, żeby zarobić więcej.",
+    "illustration": "opponent-types",
+    "keyPoints": [
+      "GTO (strategia zbalansowana) nie przegrywa z nikim, ale nie wykorzystuje słabości przeciwników.",
+      "Nit (ciasny) — kradnij jego blindy częściej, sprawdzaj jego all-iny rzadziej.",
+      "LAG/maniak (luźny, agresywny) — sprawdzaj szerzej, kradnij mniej, bo częściej odpowie.",
+      "Rekreacyjny (za dużo sprawdza) — nie blefuj, graj na wartość szerzej.",
+      "Eksploatacja wymaga informacji: notatek, statystyk z HH, obserwacji."
+    ],
+    "body": [
+      "Tryb „Eksploatacja” w trenerze przypisuje przeciwnikom typy i przesuwa ich zasięgi. Ten sam spot, który przeciwko regularowi jest pasem, przeciwko maniakowi bywa callem.",
+      "Notatki o przeciwnikach w dzienniku i statystyki VPIP/PFR z zaimportowanych rąk pomagają ustalić typ gracza w prawdziwej grze."
+    ],
+    "stage": 5,
+    "order": 3
+  },
+  {
+    "id": "analiza-rozdan",
+    "title": "Analiza rozdań i praca z historią rąk",
+    "summary": "Jak zamienić sesję w lekcję: import HH, replayer, tagi.",
+    "illustration": "hh-review",
+    "keyPoints": [
+      "Po sesji eksportuj historię rąk z klienta pokerowego i importuj ją do dziennika.",
+      "Najpierw przeglądaj ręce oznaczone przez apkę jako spoty push/fold niezgodne z modelem.",
+      "Taguj ręce (np. „leak-call-za-szeroki”, „bąbelek”), żeby widzieć powtarzające się błędy.",
+      "VPIP i PFR mówią, jak luźno i agresywnie grasz — porównuj je w czasie.",
+      "Analizuj decyzje, nie wyniki — przegrana z AA nie jest błędem."
+    ],
+    "body": [
+      "Import obsługuje formaty PokerStars i GGPoker. Każda ręka trafia do historii z pozycją, stosem w bb, wynikiem i pełnym przebiegiem akcji — możesz ją odtworzyć krok po kroku w replayerze.",
+      "Funkcja „Przeanalizuj spoty push/fold” wybiera rozdania, w których byłeś pierwszy do akcji z krótkim stosem albo stałeś przed all-inem, i porównuje Twoją decyzję z modelem (w chip EV, bo plik HH nie zawiera struktury wypłat)."
+    ],
+    "stage": 5,
+    "order": 4
+  },
+  {
+    "id": "bankroll",
+    "title": "Bankroll i wariancja",
+    "summary": "Jak nie zbankrutować przy dodatnim ROI.",
+    "illustration": "bankroll-curve",
+    "keyPoints": [
+      "Turnieje mają ogromną wariancję — nawet dobry gracz może mieć serię 100+ turniejów bez dużej wygranej.",
+      "Zasada orientacyjna: 100–200 średnich wpisowych (ABI) w bankrollu na MTT.",
+      "ROI = (wygrane − wpisowe) / wpisowe. Wiarygodne dopiero po setkach turniejów.",
+      "Schodzenie z limitu po spadku to normalna część gry, nie porażka.",
+      "Prowadź rejestr sesji — bez danych nie wiesz, czy wygrywasz."
+    ],
+    "body": [
+      "Moduł Bankroll pozwala zapisywać sesje (liczba turniejów, wpisowe, wygrane), liczy ROI, ABI i pokazuje krzywą bankrollu. Na tej podstawie podpowiada maksymalne wpisowe zgodne z wybraną zasadą (np. 100 ABI).",
+      "Pamiętaj: dopiero kilkaset turniejów daje sensowną informację o Twoim ROI. Wcześniej liczy się jakość decyzji — a tę mierzy trener."
+    ],
+    "stage": 5,
+    "order": 5
   },
   {
     "id": "multitabling-mental",
@@ -123,7 +493,86 @@
     "body": [
       "Multi-tabling nie polega na 'myśleniu szybciej' — polega na tym, żeby jak najwięcej decyzji było już wcześniej przygotowanych w głowie jako odruch, a nie świeże przeliczanie od zera.",
       "Dlatego trening push/fold i podstaw ICM jest tak dobrym fundamentem pod multi-tabling: to właśnie te decyzje powtarzają się najczęściej i najbardziej nadają się do 'zautomatyzowania' poprawnej reakcji.",
-      "Użyj trybu Speed (limit czasu na decyzję) w trenerze, żeby budować te odruchy w warunkach zbliżonych do gry na kilku stołach naraz."
-    ]
+      "Użyj trybu Speed (limit czasu na decyzję) w trenerze, a potem sesji 2–3 turniejów naraz, żeby budować te odruchy w warunkach zbliżonych do prawdziwego multi-tablingu."
+    ],
+    "illustration": "multitable",
+    "stage": 6,
+    "order": 1
+  },
+  {
+    "id": "tilt",
+    "title": "Tilt i zarządzanie emocjami",
+    "summary": "Najdroższy leak nie jest w zasięgach, tylko w głowie.",
+    "illustration": "tilt-meter",
+    "keyPoints": [
+      "Tilt to gra gorsza niż zwykle pod wpływem emocji — po bad beatach, serii przegranych, zmęczeniu.",
+      "Typowe objawy: luźniejsze calle, „odgrywanie się”, szybkie decyzje bez myślenia.",
+      "Ustal z góry stop-loss i limit czasu sesji.",
+      "Po 2–3 błędach z rzędu zrób 2 minuty przerwy — oddech, woda, wstań od biurka.",
+      "Statystyki tiltu w apce pokazują, czy po serii błędów grasz gorzej."
+    ],
+    "body": [
+      "Moduł Statystyki → Tilt porównuje Twoją trafność po 2+ błędach z rzędu ze średnią, a także trafność o różnych porach dnia i w kolejnych minutach sesji. Jeśli widzisz wyraźny spadek, masz konkretną regułę do wdrożenia.",
+      "Przy multi-tablingu tilt jest groźniejszy: jedna emocjonalna decyzja na każdym z trzech stołów to trzy błędy w ciągu minuty."
+    ],
+    "stage": 6,
+    "order": 2
+  },
+  {
+    "id": "rutyna",
+    "title": "Rutyna sesji i przygotowanie",
+    "summary": "Rozgrzewka, sesja, analiza — powtarzalny rytm, który daje postęp.",
+    "illustration": "routine",
+    "keyPoints": [
+      "Rozgrzewka: 10 minut trenera (wyzwanie dnia albo powtórki błędów) przed grą.",
+      "Ustal liczbę turniejów i godzinę końca przed startem.",
+      "Podczas gry notuj trudne ręce jednym słowem — analizuj je po sesji, nie w trakcie.",
+      "Po sesji: import HH, przegląd spotów push/fold, 2–3 wpisy do dziennika.",
+      "Raz w tygodniu: przegląd raportu leaków i aktualizacja celów."
+    ],
+    "body": [
+      "Najlepsi gracze nie są lepsi tylko w trakcie gry — są lepiej przygotowani. Rozgrzewka w trenerze przypomina mózgowi zasięgi i ustawia tempo decyzji, zanim pojawią się prawdziwe pieniądze.",
+      "Cele tygodniowe w apce (liczba spotów, trafność, lekcje, powtórki) zamieniają tę rutynę w mierzalny plan."
+    ],
+    "stage": 6,
+    "order": 3
+  },
+  {
+    "id": "plan-rozwoju",
+    "title": "Planowanie rozwoju",
+    "summary": "Od listy leaków do planu treningu na tydzień.",
+    "illustration": "plan",
+    "keyPoints": [
+      "Wybieraj 1–2 leaki naraz — próba naprawy wszystkiego naraz nie działa.",
+      "Każdy leak zamieniaj na konkretne ćwiczenie (np. 50 spotów call vs shove z BB przy 10–15bb).",
+      "Mierz postęp tą samą miarą co problem (trafność w danej komórce).",
+      "Adaptacyjna trudność w trenerze sama podsuwa spoty, w których się mylisz.",
+      "Co miesiąc sprawdzaj raport — czy stare leaki zniknęły, czy pojawiły się nowe."
+    ],
+    "body": [
+      "Raport leaków grupuje Twoje błędy według typu spotu, pozycji i stosu. Jeśli widzisz „Za luźno: call vs shove z BB przy 11–15bb”, ustaw filtr trenera na ten typ, pozycję i stos — i przećwicz 50 spotów.",
+      "Coach AI potrafi zamienić Twoje statystyki w tygodniowy plan treningowy — z konkretnymi ćwiczeniami na każdy dzień."
+    ],
+    "stage": 6,
+    "order": 4
+  },
+  {
+    "id": "icm-zaawansowany",
+    "title": "Zaawansowany ICM: risk premium i dynamika stołu",
+    "summary": "Kto ma przewagę ICM i jak ją wykorzystać.",
+    "illustration": "risk-premium",
+    "keyPoints": [
+      "Risk premium = dodatkowe equity ponad chip EV, którego potrzebujesz, żeby ryzykować stos.",
+      "Risk premium jest największe między średnimi stosami — obaj mają dużo do stracenia.",
+      "Duży stos ma najmniejsze risk premium wobec średnich stosów — może na nich naciskać.",
+      "Gdy przy stole jest bardzo krótki stos, średnie stosy powinny unikać walki między sobą.",
+      "Twoja pozycja względem dużych stosów (kto siedzi po Twojej lewej) zmienia, jak często możesz kraść."
+    ],
+    "body": [
+      "ICM nie jest symetryczny: wymagane equity zależy od tego, kto z kim gra. Duży stos przeciwko średniemu ryzykuje stosunkowo mało (nawet przegrywając, zostaje w grze), a średni stos ryzykuje odpadnięcie przed kolejnym pay jumpem.",
+      "W funkcji „Co jeśli” możesz zmieniać stos swój i przeciwnika i obserwować, jak przesuwa się próg equity w ICM w porównaniu z chip EV. To najlepszy sposób, żeby „poczuć” risk premium."
+    ],
+    "stage": 6,
+    "order": 5
   }
 ]
